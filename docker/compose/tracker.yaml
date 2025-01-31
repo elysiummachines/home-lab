@@ -1,7 +1,7 @@
 ---
 services:
   tracker:
-    image: lscr.io/linuxserver/speedtest-tracker:0.21.2
+    image: lscr.io/linuxserver/speedtest-tracker:1.2.0-ls74
     container_name: speedtest-tracker
     ports:
       - 8686:80

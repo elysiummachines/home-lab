@@ -1,0 +1,94 @@
+# ─────────────────────────────────────────────────────────────
+#  Playbook: update-hosts.yaml
+#  Tags: 8 (update, upgrade, clean, reboot, apt, yum, debian, redhat)
+#  Last Updated: 2024-04-17
+#  Description:
+#   - Universal update playbook for Debian and RedHat-based systems
+#   - Uses intelligent reboot logic (Kernel or /var/run/reboot-required required)
+#   - Supports tag-driven selective execution
+#   - Built for CLI automation with sudo escalation
+#   - Clean tasks now include both APT and YUM systems
+#
+#  Scope:
+#   - Hosts: all
+#   - OS Families: Debian, RedHat
+#   - Requires: Ansible >= 2.13
+#
+#  Sample Usage:
+#   - ansible_update --tags "update,upgrade"
+#   - ansible_update --tags clean
+#   - ansible_update --tags reboot --limit HS01.alprojects.tech
+#   - ansible_update --tags "update,clean" --limit DC01.alprojects.tech
+# ─────────────────────────────────────────────────────────────
+
+---
+- name: Update Hosts
+  hosts: all
+  become: true
+  tasks:
+
+    - name: Update APT package list
+      apt:
+        update_cache: yes
+      when: ansible_facts['os_family'] == "Debian"
+      tags: [update, apt, debian, all]
+
+    - name: Upgrade APT packages
+      apt:
+        upgrade: dist
+        autoremove: yes
+      when: ansible_facts['os_family'] == "Debian"
+      tags: [upgrade, apt, debian, all]
+
+    - name: Clean APT cache
+      apt:
+        autoclean: yes
+      when: ansible_facts['os_family'] == "Debian"
+      tags: [clean, apt, debian, all]
+
+    - name: Update YUM packages
+      yum:
+        name: '*'
+        state: latest
+      when: ansible_facts['os_family'] == "RedHat"
+      tags: [update, yum, redhat, all]
+
+    - name: Clean YUM cache
+      command: yum clean all
+      when: ansible_facts['os_family'] == "RedHat"
+      tags: [clean, yum, redhat, all]
+
+    - name: Check if reboot is required (Debian)
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required
+      when: ansible_facts['os_family'] == "Debian"
+      tags: [reboot, debian, all]
+
+    - name: Reboot if needed (Debian)
+      reboot:
+        msg: "Reboot triggered by Ansible because /var/run/reboot-required was present"
+        reboot_timeout: 600
+        test_command: uptime
+      when:
+        - ansible_facts['os_family'] == "Debian"
+        - reboot_required.stat.exists
+      tags: [reboot, debian, all]
+
+    - name: Check if reboot is required (RedHat)
+      command: needs-restarting -r
+      register: reboot_check_redhat
+      failed_when: false
+      changed_when: false
+      when: ansible_facts['os_family'] == "RedHat"
+      tags: [reboot, redhat, all]
+
+    - name: Reboot if needed (RedHat)
+      reboot:
+        msg: "Reboot triggered by Ansible because a new kernel was installed"
+        reboot_timeout: 600
+        test_command: uptime
+      when:
+        - ansible_facts['os_family'] == "RedHat"
+        - reboot_check_redhat.rc == 1
+      tags: [reboot, redhat, all]

@@ -1,75 +1,80 @@
-# I been manually keeping a list and copy and pasting into my bashrc, its about time 
-
+# ─────────────────────────────────────────────────────────────
+#  Playbook: ansible-alias.yaml
+#  Tags: 4 (alias, bashrc, shell, all)
+#  Last Updated: 2025-04-22
+#  Description:
+#   - Dynamically assembles ~/.bash_aliases using a combination of
+#     default aliases (universal) and host/group-specific fragments
+#   - Copies .j2 alias files into a temp dir, then merges them via
+#     Ansible's `assemble` module into one final alias file
+#   - Ensures ~/.bashrc includes the aliases via a sourcing line
+#   - Applies strict permissions (0600) to the generated file
+#
+#  Why this change:
+#   - Previous version used a static `blockinfile`, making it hard
+#     to scale or isolate aliases per host/group.
+#   - The new method enables reusable .j2 fragments, easier testing,
+#     per-host alias sets, and cleaner long-term playbook structure.
+#
+#  Scope:
+#   - Hosts: all
+#   - Shell: Bash
+#   - OS: Debian-based (or compatible with .bashrc/.bash_aliases)
+#
+#  Sample Usage:
+#   - ansible-playbook ansible-alias.yaml --tags alias
+#   - ansible-playbook ansible-alias.yaml --limit HS01 --tags alias
+#       # (HS01 receives: default + proxmox/10_ansible + 20_docker)
+#   - ANSIBLE_ALIAS_DIR=aliases/dc ansible-playbook ansible-alias.yaml --limit DC01 --tags alias
+# ─────────────────────────────────────────────────────────────
 ---
-- name: custom aliases  
+- name: Configure modular bash aliases per host
   hosts: all
-  become: true  # Ensure we are using root for this operation
+  gather_facts: true
+  vars:
+    default_alias_dir: aliases/default
   tasks:
-    - name: Add alias block to .bashrc
-      ansible.builtin.blockinfile:
-        path: "{{ ansible_env.HOME }}/.bashrc"
-        block: |
-          # Custom Aliases
-          
-          # package_collection
-          alias update='sudo apt-get update && sudo apt-get upgrade -y'
-          alias clean='sudo apt autoremove && sudo apt autoclean -y'
 
-          # docker_collection
-          alias dcu='docker compose up -d'
-          alias dcb='docker compose build'
-          alias dcd='docker compose down'
-          alias dcl='docker compose logs'
-          alias dps='docker compose ps'
-          alias dce='docker compose exec'
-          alias dnet='docker network ls'
-          alias dclf='docker compose logs -f'
-          alias dneti='docker network inspect'
-          alias swarmkill='docker kill $(docker ps -q)'
+    - name: Create temporary alias merge dir
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: _alias_merge
+      register: alias_merge_tmp
+      tags: [alias, bashrc, shell, all]
 
-          # ansible_collection
-          alias Ansible='source /ansible/venv/bin/activate'
-          alias versiona='ansible --version'
-          alias pinga='ansible all -m ping'
-          alias playa='ansible-playbook'
-          alias listhostsa='ansible all --list-hosts'
-          alias testsyntaxa='ansible-playbook --syntax-check'
-          alias checkinva='ansible-inventory --list -y'
-          alias cmdalla='ansible all -a'
-          alias playbookv='ansible-playbook -v'
-          alias clearssh='rm -rf home/echo/.ssh/known_hosts'
-          alias sshlist='ssh-add -l'
-          alias restarta='sudo systemctl restart ansible'
+    - name: Copy default aliases to temp dir
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ alias_merge_tmp.path }}/"
+      with_fileglob:
+        - "{{ playbook_dir }}/templates/{{ default_alias_dir }}/*.j2"
+      tags: [alias, bashrc, shell, all]
 
-          # find_listing
-          alias find='find . -name'
-          alias findit='find . -name 2>/dev/null'
+    - name: Copy host/group aliases to temp dir (if defined)
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ alias_merge_tmp.path }}/"
+      with_fileglob:
+        - "{{ playbook_dir }}/templates/{{ ansible_alias_dir }}/*.j2"
+      when: ansible_alias_dir is defined
+      tags: [alias, bashrc, shell, all]
 
-          # directory_change
-          alias home='cd ~'
-          alias ..='cd ..'
-          alias ...='cd ../..'
-          alias ....='cd ../../../../../../../../../../../../../..'
-          alias compose='cd ../../../compose'
+    - name: Assemble all alias fragments into .bash_aliases
+      ansible.builtin.assemble:
+        src: "{{ alias_merge_tmp.path }}"
+        dest: "/home/{{ ansible_facts.user_id }}/.bash_aliases"
+        remote_src: true
+        mode: '0600'
+        owner: "{{ ansible_facts.user_id }}"
+        group: "{{ ansible_facts.user_gid | default(ansible_facts.user_id) }}"
+      delegate_to: "{{ inventory_hostname }}"
+      tags: [alias, bashrc, shell, all]
 
-          # directory_list
-          alias ll='ls -ali'
-          alias la='ls -A'
-          alias l='ls -CF'
-
-          # misc
-          alias rm='rm -i'
-          alias rmd='sudo rm -rf'
-          alias cls='clear'
-
-          alias df='df -h'
-          alias cms='free -m -l -t'
-          alias dms='sudo ./scripts/clean_memory.sh'
-
-          alias ping='ping -c 5'
-          alias netstat='netstat -tuln'
-
-    - name: Reload bash to apply aliases
-      ansible.builtin.shell: "source {{ ansible_env.HOME }}/.bashrc"
-      args:
-        executable: /bin/bash
+    - name: Ensure .bashrc sources .bash_aliases if missing
+      ansible.builtin.lineinfile:
+        path: "/home/{{ ansible_facts.user_id }}/.bashrc"
+        regexp: '^source ~/.bash_aliases$'
+        line: 'source ~/.bash_aliases'
+        state: present
+        insertafter: EOF
+      tags: [alias, bashrc, shell, all]

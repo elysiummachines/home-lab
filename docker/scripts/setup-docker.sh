@@ -74,10 +74,15 @@ echo ""
 check_root
 check_sudo
 
-# 1. Install Docker
+# 0. Install Docker
 log_info "Step 1/7: Installing Docker and Docker Compose..."
 sudo apt update
 sudo apt install -y docker.io docker-compose
+
+# 1. Enable and start Docker service
+log_info "Enabling and starting Docker service..."
+sudo systemctl enable docker
+sudo systemctl start docker
 
 # 2. Ensure Docker group exists
 log_info "Step 2/7: Setting up Docker group..."
@@ -103,7 +108,23 @@ mkdir -p -m 750 ~/docker/backups     # For backups
 log_info "Step 6/7: Setting ownership..."
 sudo chown -R "$USER":docker ~/docker
 
-# 7. Create useful starter files
+# 7. Docker's daemon
+log_info "Configuring Docker daemon security..."
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json > /dev/null <<EOF
+{
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "3"
+  },
+  "live-restore": true,
+  "userland-proxy": false
+}
+EOF
+sudo systemctl restart docker
+
+# 8. Create useful starter files
 log_info "Step 7/7: Creating starter files and examples..."
 
 # .gitignore to prevent committing secrets
@@ -146,7 +167,13 @@ cat > ~/docker/README.md << 'EOF'
 
 ## Quick Start:
 1. Create a new stack:
-   ```bash
+```bash
    cd ~/docker/stacks
    mkdir myapp && cd myapp
    nano docker-compose.yml
+```
+EOF
+
+# 9. Final Step
+log_warning "IMPORTANT: Log out and back in for Docker group to take effect!"
+log_info "Or run: newgrp docker" 

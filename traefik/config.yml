@@ -1,0 +1,315 @@
+http:
+  routers:
+
+#=== Routes ===#
+    dockge:
+      entryPoints:
+        - "https"
+      rule: "Host(`dockge.local.jacinto.cc`)"
+      middlewares:
+        - secured
+      tls:
+        certResolver: cloudflare
+      service: dockge
+
+    uptime-kuma:
+      entryPoints:
+        - "https"
+      rule: "Host(`kuma.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+      tls:
+        certResolver: cloudflare
+      service: uptime-kuma
+
+    portainer:
+      entryPoints:
+        - "https"
+      rule: "Host(`portainer-n1.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+      tls:
+        certResolver: cloudflare
+      service: portainer
+
+    tracker:
+      entryPoints:
+        - "https"
+      rule: "Host(`tracker-speed.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+      tls:
+        certResolver: cloudflare
+      service: tracker
+
+    wazuh.dashboard:
+      entryPoints:
+        - "https"
+      rule: "Host(`xdr-siem.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+      tls:
+        certResolver: cloudflare
+      service: wazuh.dashboard
+
+    obsidian:
+      entryPoints:
+        - "https"
+      rule: "Host(`notes-draw.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+      tls:
+        certResolver: cloudflare
+      service: obsidian
+
+    pihole:
+      entryPoints:
+        - "https"
+      rule: "Host(`pihole.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+      tls:
+        certResolver: cloudflare
+      service: pihole
+
+    pihole2:
+      entryPoints:
+        - "https"
+      rule: "Host(`pihole2.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+      tls:
+        certResolver: cloudflare
+      service: pihole2
+
+    sonarr:
+      entryPoints:
+        - "https"
+      rule: "Host(`sonarr.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+      tls:
+        certResolver: cloudflare
+      service: sonarr
+
+    radarr:
+      entryPoints:
+        - "https"
+      rule: "Host(`radarr.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+      tls:
+        certResolver: cloudflare
+      service: radarr
+
+    gitlab:
+      entryPoints:
+        - "https"
+      rule: "Host(`gitlab.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+      tls:
+        certResolver: cloudflare
+      service: gitlab
+
+    kali-linux:
+      entryPoints:
+        - "https"
+      rule: "Host(`kali.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+      tls:
+        certResolver: cloudflare
+      service: kali-linux
+
+    homepage:
+      entryPoints:
+        - "https"
+      rule: "Host(`homepage.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+      tls:
+        certResolver: cloudflare
+      service: homepage
+
+    sonarqube:
+      entryPoints:
+        - "https"
+      rule: "Host(`sonarqube.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+      tls:
+        certResolver: cloudflare
+      service: sonarqube
+
+    proxmox1:
+      entryPoints:
+        - "https"
+      rule: "Host(`proxmox1.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+        - proxmox-timeout
+      tls:
+        certResolver: cloudflare
+      service: proxmox1
+
+    proxmox2:
+      entryPoints:
+        - "https"
+      rule: "Host(`proxmox2.local.jacinto.cc`)"
+      middlewares:
+        - default-headers
+        - proxmox-timeout
+      tls:
+        certResolver: cloudflare
+      service: proxmox2
+
+#=== Services ===#
+  services:
+    dockge:
+      loadBalancer:
+        servers:
+          - url: "http://10.100.100.234:5001"
+        passHostHeader: true
+
+    uptime-kuma:
+      loadBalancer:
+        servers:
+          - url: "http://10.100.100.234:3001"
+        passHostHeader: true
+
+    portainer:
+      loadBalancer:
+        servers:
+          - url: "https://10.100.100.234:9443"
+        passHostHeader: true
+
+    tracker:
+      loadBalancer:
+        servers:
+          - url: "http://10.100.100.234:8686"
+        passHostHeader: true
+
+    wazuh.dashboard:
+      loadBalancer:
+        servers:
+          - url: "https://10.100.100.234:7443"
+        passHostHeader: true
+
+    obsidian:
+      loadBalancer:
+        servers:
+          - url: "https://10.100.100.234:33001"
+        passHostHeader: true
+
+    pihole:
+      loadBalancer:
+        servers:
+          - url: "http://10.100.100.235:80"
+        passHostHeader: true
+
+    pihole2:
+      loadBalancer:
+        servers:
+            - url: "http://10.100.100.236:80"
+        passHostHeader: true
+
+    sonarr:
+      loadBalancer:
+        servers:
+          - url: "http://10.100.100.234:8989"
+        passHostHeader: true
+
+    radarr:
+      loadBalancer:
+        servers:
+          - url: "http://10.100.100.234:7878"
+        passHostHeader: true
+
+    gitlab:
+      loadBalancer:
+        servers:
+          - url: "https://10.100.100.234:8929"
+        passHostHeader: true
+
+    kali-linux:
+      loadBalancer:
+        servers:
+          - url: "https://10.100.100.234:3002"
+        passHostHeader: true
+
+    homepage:
+      loadBalancer:
+        servers:
+          - url: "http://10.100.100.234:3000"
+        passHostHeader: true
+
+    sonarqube:
+      loadBalancer:
+        servers:
+          - url: "http://10.100.100.234:9000"
+        passHostHeader: true
+
+    proxmox1:
+      loadBalancer:
+        servers:
+          - url: "https://10.100.100.240:8006"
+        passHostHeader: true
+        responseForwarding:
+          flushInterval: 100ms
+        serversTransport: proxmox-transport
+
+    proxmox2:
+      loadBalancer:
+        servers:
+          - url: "https://10.100.100.239:8006"
+        passHostHeader: true
+        responseForwarding:
+          flushInterval: 100ms
+        serversTransport: proxmox-transport
+
+#=== Middlewares ===#
+  middlewares:
+    https-redirectscheme:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
+    default-headers:
+      headers:
+        frameDeny: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 15552000
+        customFrameOptionsValue: SAMEORIGIN
+        customRequestHeaders:
+          X-Forwarded-Proto: https
+
+    proxmox-timeout:
+      buffering:
+        maxRequestBodyBytes: 0
+        maxResponseBodyBytes: 0
+        memRequestBodyBytes: 0
+        memResponseBodyBytes: 0
+
+    default-whitelist:
+      ipAllowList:
+        sourceRange:
+          - "192.168.0.0/16"
+          - "172.16.0.0/12"
+          - "10.0.0.0/8"
+
+    secured:
+      chain:
+        middlewares:
+          - default-whitelist
+          - default-headers
+
+#=== Servers Transports ===#
+  serversTransports:
+    proxmox-transport:
+      serverName: "proxmox"
+      insecureSkipVerify: true

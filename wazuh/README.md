@@ -42,4 +42,3 @@ Wazuh’s XDR capabilities extend beyond traditional security tools by integrati
   ##
   > A cool and fun fact about Wazuh is its roots in the OSSEC project. Wazuh started as a fork of OSSEC, an open-source intrusion detection system, and has since evolved into a comprehensive security monitoring platform. Unlike its predecessor, Wazuh has expanded significantly to include features like XDR and SIEM, making it a powerful tool for modern cybersecurity needs. Wazuh's open-source nature and active community support ensure it continuously evolves to tackle emerging threats, making it a favorite among security professionals.
 
-

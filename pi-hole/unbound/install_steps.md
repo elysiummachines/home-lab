@@ -9,3 +9,4 @@
 6) enter ip into broswer >> gui >> settings >> dns >> in the "Upstream DNS Servers" check "Custom 1 (IPv4)"
 7) entered 127.0.0.1#5335 into empty box1
 8) below that section you will see "Potentially dangerous options" >> bind it to your nic >> in my case "Respond only on interface eth0"
+```

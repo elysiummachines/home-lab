@@ -3,7 +3,7 @@ pi:
   debug: true
 log:
   level: DEBUG
-accessLog: {} #must habr this to get actual output for logs having debug level alone doesn't do anything
+accessLog: {} #must have this to get actual output for logs having debug level alone doesn't do anything
 entryPoints:
   http:
     address: ":80"

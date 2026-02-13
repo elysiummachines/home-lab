@@ -1,12 +1,10 @@
 # ~/.config/starship.toml
-
-# Use custom format with lines
 format = '''
-[========================>](bold purple)
+[=======================>](bold purple)
 [┌──────────────────>](bold green)
-[│](bold green)$os$directory$git_branch$git_status$rust$package$cmd_duration
+[│](bold green)$os$python$directory$git_branch$git_status$rust$package$cmd_duration
 [└─────>](bold green)
-[===========>](bold purple)'''
+[==========>](bold purple)'''
 
 # Command Duration Module Configuration
 [cmd_duration]
@@ -17,7 +15,7 @@ style = "bold yellow"  # Style for the duration text
 
 # OS module configuration for displaying the Debian logo
 [os]
-format = "[$symbol](bold white) "  # Display the OS symbol in bold white
+format = "[$symbol](bold purple) "  # Display the OS symbol in bold white
 disabled = false
 
 [os.symbols]
@@ -38,3 +36,12 @@ style = "bold blue"  # Style for the branch text
 [git_status]
 format = "[$all_status$ahead_behind]($style)"  # Show all status icons
 style = "bold purple"  # Style for the status text
+
+# venv Status Module Configuration
+[python]
+symbol = "🐍 "
+format = "[$symbol$virtualenv $version]($style) "
+style = "bold green"
+detect_extensions = ["py"]
+detect_files = []
+detect_folders = []

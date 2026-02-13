@@ -57,4 +57,4 @@ Classified Patterns:
 
 
 ##
-> This Chain of steps—starting with abstraction, moving through decomposition, and then identifying patterns—the event planning process is greatly simplified and automated using GitLab CI/CD, leading to efficiency and error reduction in the event management process. I open for questions :) 
+> This Chain of steps—starting with abstraction, moving through decomposition, and then identifying patterns—the event planning process is greatly simplified and automated using GitLab CI/CD, leading to efficiency and error reduction in the event management process. I open for questions :)

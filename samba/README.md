@@ -34,4 +34,4 @@ Installing `RSAT` tools to manage the DC and AD services frontend, it's worth me
   - This method provides a clean and reversible way to manage software compiled from source, which is especially helpful in environments where you might be compiling different versions or multiple software packages.
 
 ##
-> Samba, an open-source software suite, has a unique history tied to its name. "Samba" was chosen because it contains the letters "S", "M", and "B" from the SMB (Server Message Block) protocol, which is fundamental to its function. 
+> Samba, an open-source software suite, has a unique history tied to its name. "Samba" was chosen because it contains the letters "S", "M", and "B" from the SMB (Server Message Block) protocol, which is fundamental to its function.

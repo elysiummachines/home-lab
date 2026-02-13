@@ -11,3 +11,4 @@
 4) pihole -a -p **will get prompted to change password**
 5) enter ip into broswer >> gui >> adlist >> used the 2 most resoable filters from firebog.net from each section
 6) Save >> you now have a basic forwarding DNS server
+```

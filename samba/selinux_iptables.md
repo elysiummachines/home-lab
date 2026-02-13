@@ -22,5 +22,6 @@ Linux FW + SSH Configuration:
     #DROP is more security focused REJECT gives away to much info 
     -A INPUT -p tcp --dport 22 -j DROP  
     #
-systemctl restart iptables 
-systemctl restart sshd **logout/login**
+11) systemctl restart iptables 
+12) systemctl restart sshd 'logout/login'
+```

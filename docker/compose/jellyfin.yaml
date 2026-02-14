@@ -1,7 +1,0 @@
-docker run -d \ 
-  --name jellyfin \ 
-  -v /mnt/iscsi:/mnt/iscsi:ro \ 
-  -v jellyfin_config:/config \ 
-  -v jellyfin_cache:/cache \ 
-  -p 8096:8096 \ 
-  jellyfin/jellyfin 

@@ -14,8 +14,8 @@ subnet 0.0.0.0 netmask 255.255.255.0 {
   option routers 0.0.0.0;
   option subnet-mask 0.0.0.0;
   option domain-name-servers 0.0.0.0;
-  option domain-name "alprojects";
-  option domain-search "alprojects";
+  option domain-name "elysium";
+  option domain-search "elysium";
 }
 
 host device1 {
@@ -25,4 +25,5 @@ host device1 {
 
 systemctl enable dhcpd
 systemctl start dhcpd
-systemctl status dhcpd **see clients leases**
+systemctl status dhcpd 'see clients leases'
+```

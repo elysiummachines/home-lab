@@ -1,0 +1,81 @@
+---
+services:
+  argo_tunnel_1:
+    image: cloudflare/cloudflared:latest
+    container_name: _argo
+    command: tunnel --no-autoupdate run --token
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+    restart: unless-stopped
+
+  argo_tunnel_2:
+    image: cloudflare/cloudflared:latest
+    container_name: _argo
+    command: tunnel --no-autoupdate run --token 
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+    restart: unless-stopped
+
+  argo_tunnel_3:
+    image: cloudflare/cloudflared:latest
+    container_name: _argo
+    command: tunnel --no-autoupdate run --token
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+    restart: unless-stopped
+
+  argo_tunnel_4:
+    image: cloudflare/cloudflared:latest
+    container_name: _argo
+    command: tunnel --no-autoupdate run --token
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+    restart: unless-stopped
+
+  argo_tunnel_5:
+    image: cloudflare/cloudflared:latest
+    container_name: _argo
+    command: tunnel --no-autoupdate run --token 
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+    restart: unless-stopped
+
+  argo_tunnel_6:
+    image: cloudflare/cloudflared:latest
+    container_name: _argo
+    command: tunnel --no-autoupdate run --token 
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+    restart: unless-stopped
+
+  argo_tunnel_7:
+    image: cloudflare/cloudflared:latest
+    container_name: _argo
+    command: tunnel --no-autoupdate run --token 
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+    restart: unless-stopped
+
+  argo_tunnel_8:
+    image: cloudflare/cloudflared:latest
+    container_name: _argo
+    command: tunnel --no-autoupdate run --token 
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+    restart: unless-stopped

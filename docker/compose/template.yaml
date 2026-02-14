@@ -1,0 +1,19 @@
+---
+services:
+  SERVICE_NAME:
+    image:
+    container_name:
+    ports:
+      - *:*
+    volumes:
+      - /*/*/*:/*
+    environment:
+      - PUID=*
+      - PGID=*
+      - TZ=America/Calgary
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://IP_ADDRESS:8989 || exit 0"]
+      interval: 40s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped

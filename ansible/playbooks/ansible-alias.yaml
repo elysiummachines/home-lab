@@ -1,0 +1,75 @@
+# I been manually keeping a list and copy and pasting into my bashrc, its about time 
+
+---
+- name: custom aliases  
+  hosts: all
+  become: true  # Ensure we are using root for this operation
+  tasks:
+    - name: Add alias block to .bashrc
+      ansible.builtin.blockinfile:
+        path: "{{ ansible_env.HOME }}/.bashrc"
+        block: |
+          # Custom Aliases
+          
+          # package_collection
+          alias update='sudo apt-get update && sudo apt-get upgrade -y'
+          alias clean='sudo apt autoremove && sudo apt autoclean -y'
+
+          # docker_collection
+          alias dcu='docker compose up -d'
+          alias dcb='docker compose build'
+          alias dcd='docker compose down'
+          alias dcl='docker compose logs'
+          alias dps='docker compose ps'
+          alias dce='docker compose exec'
+          alias dnet='docker network ls'
+          alias dclf='docker compose logs -f'
+          alias dneti='docker network inspect'
+          alias swarmkill='docker kill $(docker ps -q)'
+
+          # ansible_collection
+          alias Ansible='source /ansible/venv/bin/activate'
+          alias versiona='ansible --version'
+          alias pinga='ansible all -m ping'
+          alias playa='ansible-playbook'
+          alias listhostsa='ansible all --list-hosts'
+          alias testsyntaxa='ansible-playbook --syntax-check'
+          alias checkinva='ansible-inventory --list -y'
+          alias cmdalla='ansible all -a'
+          alias playbookv='ansible-playbook -v'
+          alias clearssh='rm -rf home/echo/.ssh/known_hosts'
+          alias sshlist='ssh-add -l'
+          alias restarta='sudo systemctl restart ansible'
+
+          # find_listing
+          alias find='find . -name'
+          alias findit='find . -name 2>/dev/null'
+
+          # directory_change
+          alias home='cd ~'
+          alias ..='cd ..'
+          alias ...='cd ../..'
+          alias ....='cd ../../../../../../../../../../../../../..'
+          alias compose='cd ../../../compose'
+
+          # directory_list
+          alias ll='ls -ali'
+          alias la='ls -A'
+          alias l='ls -CF'
+
+          # misc
+          alias rm='rm -i'
+          alias rmd='sudo rm -rf'
+          alias cls='clear'
+
+          alias df='df -h'
+          alias cms='free -m -l -t'
+          alias dms='sudo ./scripts/clean_memory.sh'
+
+          alias ping='ping -c 5'
+          alias netstat='netstat -tuln'
+
+    - name: Reload bash to apply aliases
+      ansible.builtin.shell: "source {{ ansible_env.HOME }}/.bashrc"
+      args:
+        executable: /bin/bash

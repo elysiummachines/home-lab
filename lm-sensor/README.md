@@ -19,9 +19,9 @@
 - ***Regularly Update lm-sensors*** - Keep lm-sensors and its database updated to ensure compatibility with new hardware, unless compiled from source
 - ***Initial Configuration*** - Run the initial configuration script to detect all available sensors. ■ `Command: sudo sensors-detect`
 - ***Check Sensor Readings*** - Regularly check sensor readings to monitor hardware health. ■  `Command: sensors`
-- ***Set Alerts*** Configure alert thresholds for critical sensors to receive notifications of potential issues.
-- ***Automate Monitoring*** Integrate lm-sensors with other monitoring tools to automate the tracking of hardware metrics.
-- ***Document Configuration*** Keep a record of sensor configurations and any customizations for easy replication and troubleshooting.
+- ***Set Alerts*** - Configure alert thresholds for critical sensors to receive notifications of potential issues.
+- ***Automate Monitoring*** - Integrate lm-sensors with other monitoring tools to automate the tracking of hardware metrics.
+- ***Document Configuration*** - Keep a record of sensor configurations and any customizations for easy replication and troubleshooting.
 
 
 > During 2001/2004, the lm_sensors package was not recommended for use on IBM ThinkPads due to potential (`EEPROM`) corruption issues on some models when aggressively probing for (`I2C`) devices.

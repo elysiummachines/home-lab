@@ -1,0 +1,115 @@
+---
+- name: Logrotate configuration for memory cache cleanup
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Ensure logrotate is installed
+      apt:
+        name: logrotate
+        state: present
+
+    - name: Ensure clear_mem_cache.log exists
+      file:
+        path: /var/log/clear_mem_cache.log
+        state: touch
+        owner: root
+        group: root
+        mode: '0640'
+
+    - name: Ensure /scripts directory exists
+      file:
+        path: /scripts
+        state: directory
+        owner: root
+        group: root
+        mode: '0740'
+
+    - name: Create logrotate configuration file for clear_mem_cache
+      copy:
+        dest: /etc/logrotate.d/clear_mem_cache
+        content: |
+          /var/log/clear_mem_cache.log {
+              weekly
+              rotate 4
+              compress
+              delaycompress
+              missingok
+              notifempty
+              create 640 root root
+              maxsize 50M
+          }
+        owner: root
+        group: root
+        mode: '0640'
+
+    - name: Verify logrotate configuration is valid
+      shell: logrotate -d /etc/logrotate.d/clear_mem_cache
+      register: logrotate_debug_output
+      failed_when: "'error' in logrotate_debug_output.stderr"
+
+    - name: Print logrotate debug output
+      debug:
+        var: logrotate_debug_output.stdout
+
+    - name: Set up mem-cache clearing script
+      copy:
+        dest: /scripts/clear_mem_cache.sh
+        content: |
+          #!/bin/bash
+          LOG_FILE="/var/log/clear_mem_cache.log"
+
+          # Ensure log file exists & has correct permissions
+          if [ ! -f "$LOG_FILE" ]; then
+              touch $LOG_FILE
+              chmod 640 $LOG_FILE
+          fi
+
+          # Log action with mem-status before & after
+          echo "$(date '+%Y-%m-%d %H:%M:%S') - Clearing mem cache. Free mem before: $(free -h | grep Mem | awk '{print $4}')" >> $LOG_FILE
+          sync; echo 3 > /proc/sys/vm/drop_caches
+          echo "$(date '+%Y-%m-%d %H:%M:%S') - Mem cache cleared successfully. Free mem after: $(free -h | grep Mem | awk '{print $4}')" >> $LOG_FILE
+        owner: root
+        group: root
+        mode: '0740'
+
+    - name: Create systemd service for clear_mem_cache
+      copy:
+        dest: /etc/systemd/system/clear_mem_cache.service
+        content: |
+          [Unit]
+          Description=Run memory cache clearing script
+          After=multi-user.target
+
+          [Service]
+          Type=oneshot
+          ExecStart=/scripts/clear_mem_cache.sh
+        owner: root
+        group: root
+        mode: '0640'
+
+    - name: Create systemd timer for clear_mem_cache
+      copy:
+        dest: /etc/systemd/system/clear_mem_cache.timer
+        content: |
+          [Unit]
+          Description=Run clear_mem_cache.service periodically
+
+          [Timer]
+          OnCalendar=weekly
+          Persistent=true
+
+          [Install]
+          WantedBy=timers.target
+        owner: root
+        group: root
+        mode: '0640'
+
+    - name: Reload systemd daemon
+      shell: systemctl daemon-reload
+
+    - name: Enable & start the systemd timer
+      systemd:
+        name: clear_mem_cache.timer
+        enabled: true
+        state: started

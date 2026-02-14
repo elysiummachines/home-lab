@@ -1,0 +1,18 @@
+#Automation for install my basics
+---
+- name: Install essential tools and utilities
+  hosts: all
+  become: true 
+  tasks:
+    - name: Install git, curl, net-tools, htop, vim, wget, zip, and unzip
+      ansible.builtin.package:
+        name:
+          - git
+          - curl
+          - net-tools
+          - htop
+          - vim
+          - wget
+          - zip
+          - unzip
+        state: present

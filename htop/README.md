@@ -22,4 +22,4 @@
 - ***Automate Monitoring*** - Integrate Htop with scripts or monitoring tools to automate the tracking of system performance metrics.
 
 ##
-  > Because system monitoring interfaces are not standardized among Unix-like operating systems, much of htop's code must be rewritten for each operating system. Cross-platform, OpenBSD, FreeBSD and Mac OS X support was added in htop 2.0.** Solaris/Illumos/OpenIndiana support was added in 2.2.0. htop was forked by several developers as htop-dev, and with support from the original author, the homepage was later redirected to a new domain. I am on version 3.3.4 as of writhing. 
+  > Because system monitoring interfaces are not standardized among Unix-like operating systems, much of htop's code must be rewritten for each operating system. Cross-platform, OpenBSD, FreeBSD and Mac OS X support was added in htop 2.0.** Solaris/Illumos/OpenIndiana support was added in 2.2.0. htop was forked by several developers as htop-dev, and with support from the original author, the homepage was later redirected to a new domain. I am on version 3.3.4 as of writhing.

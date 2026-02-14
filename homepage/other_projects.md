@@ -1,16 +1,17 @@
+## Other Front-ends:
 
-Dashy: https://github.com/lissy93/dashy
+- ***Dashy: https://github.com/lissy93/dashy***
 
-Fenrus: https://github.com/revenz/Fenrus
+- ***Fenrus: https://github.com/revenz/Fenrus***
 
-Flame: https://github.com/pawelmalak/flame
+- ***Flame: https://github.com/pawelmalak/flame***
 
-Heimdall: https://github.com/linuxserver/Heimdall
+- ***Heimdall: https://github.com/linuxserver/Heimdall***
 
-Homarr: https://github.com/ajnart/homarr
+- ***Homarr: https://github.com/ajnart/homarr***
 
-Homepage: https://github.com/gethomepage/homepage
+- ***Homepage: https://github.com/gethomepage/homepage***
 
-Homer: https://github.com/bastienwirtz/homer
+- ***Homer: https://github.com/bastienwirtz/homer***
 
-Organizr:https://github.com/causefx/Organizr
+- ***Organizr:https://github.com/causefx/Organizr***

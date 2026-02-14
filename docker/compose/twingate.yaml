@@ -1,0 +1,146 @@
+---
+services:
+  twingate_connector:
+    image: twingate/connector:1
+    container_name: twingate_calm-perch
+    environment:
+      - TZ=America/Calgary
+      - TWINGATE_NETWORK=cl0ckwerk
+      - TWINGATE_ACCESS_TOKEN=
+      - TWINGATE_REFRESH_TOKEN=
+      - TWINGATE_LABEL_HOSTNAME=DK03
+      - TWINGATE_LABEL_DEPLOYED_BY=docker
+    restart: unless-stopped
+
+  twingate_connector:
+    image: twingate/connector:2
+    container_name: twingate_calm-perch
+    environment:
+      - TZ=America/Calgary
+      - TWINGATE_NETWORK=cl0ckwerk
+      - TWINGATE_ACCESS_TOKEN=
+      - TWINGATE_REFRESH_TOKEN=
+      - TWINGATE_LABEL_HOSTNAME=DK03
+      - TWINGATE_LABEL_DEPLOYED_BY=docker
+    restart: unless-stopped
+
+  twingate_connector:
+    image: twingate/connector:2
+    container_name: twingate_calm-perch
+    environment:
+      - TZ=America/Calgary
+      - TWINGATE_NETWORK=cl0ckwerk
+      - TWINGATE_ACCESS_TOKEN=
+      - TWINGATE_REFRESH_TOKEN=
+      - TWINGATE_LABEL_HOSTNAME=DK03
+      - TWINGATE_LABEL_DEPLOYED_BY=docker
+    restart: unless-stopped
+
+  twingate_connector:
+    image: twingate/connector:2
+    container_name: twingate_calm-perch
+    environment:
+      - TZ=America/Calgary
+      - TWINGATE_NETWORK=cl0ckwerk
+      - TWINGATE_ACCESS_TOKEN=
+      - TWINGATE_REFRESH_TOKEN=
+      - TWINGATE_LABEL_HOSTNAME=DK03
+      - TWINGATE_LABEL_DEPLOYED_BY=docker
+    restart: unless-stopped
+
+  twingate_connector:
+    image: twingate/connector:3
+    container_name: twingate_calm-perch
+    environment:
+      - TZ=America/Calgary
+      - TWINGATE_NETWORK=cl0ckwerk
+      - TWINGATE_ACCESS_TOKEN=
+      - TWINGATE_REFRESH_TOKEN=
+      - TWINGATE_LABEL_HOSTNAME=DK03
+      - TWINGATE_LABEL_DEPLOYED_BY=docker
+    restart: unless-stopped
+
+  twingate_connector:
+    image: twingate/connector:4
+    container_name: twingate_calm-perch
+    environment:
+      - TZ=America/Calgary
+      - TWINGATE_NETWORK=cl0ckwerk
+      - TWINGATE_ACCESS_TOKEN=
+      - TWINGATE_REFRESH_TOKEN=
+      - TWINGATE_LABEL_HOSTNAME=DK03
+      - TWINGATE_LABEL_DEPLOYED_BY=docker
+    restart: unless-stopped
+
+  twingate_connector:
+    image: twingate/connector:5
+    container_name: twingate_calm-perch
+    environment:
+      - TZ=America/Calgary
+      - TWINGATE_NETWORK=cl0ckwerk
+      - TWINGATE_ACCESS_TOKEN=
+      - TWINGATE_REFRESH_TOKEN=
+      - TWINGATE_LABEL_HOSTNAME=DK03
+      - TWINGATE_LABEL_DEPLOYED_BY=docker
+    restart: unless-stopped
+
+
+  twingate_connector:
+    image: twingate/connector:6
+    container_name: twingate_calm-perch
+    environment:
+      - TZ=America/Calgary
+      - TWINGATE_NETWORK=cl0ckwerk
+      - TWINGATE_ACCESS_TOKEN=
+      - TWINGATE_REFRESH_TOKEN=
+      - TWINGATE_LABEL_HOSTNAME=DK03
+      - TWINGATE_LABEL_DEPLOYED_BY=docker
+    restart: unless-stopped
+
+  twingate_connector:
+    image: twingate/connector:7
+    container_name: twingate_calm-perch
+    environment:
+      - TZ=America/Calgary
+      - TWINGATE_NETWORK=cl0ckwerk
+      - TWINGATE_ACCESS_TOKEN=
+      - TWINGATE_REFRESH_TOKEN=
+      - TWINGATE_LABEL_HOSTNAME=DK03
+      - TWINGATE_LABEL_DEPLOYED_BY=docker
+    restart: unless-stopped
+
+  twingate_connector:
+    image: twingate/connector:8
+    container_name: twingate_calm-perch
+    environment:
+      - TZ=America/Calgary
+      - TWINGATE_NETWORK=cl0ckwerk
+      - TWINGATE_ACCESS_TOKEN=
+      - TWINGATE_REFRESH_TOKEN=
+      - TWINGATE_LABEL_HOSTNAME=DK03
+      - TWINGATE_LABEL_DEPLOYED_BY=docker
+    restart: unless-stopped
+
+  twingate_connector:
+    image: twingate/connector:9
+    container_name: twingate_calm-perch
+    environment:
+      - TZ=America/Calgary
+      - TWINGATE_NETWORK=cl0ckwerk
+      - TWINGATE_ACCESS_TOKEN=
+      - TWINGATE_REFRESH_TOKEN=
+      - TWINGATE_LABEL_HOSTNAME=DK03
+      - TWINGATE_LABEL_DEPLOYED_BY=docker
+    restart: unless-stopped
+
+  twingate_connector:
+    image: twingate/connector:10
+    container_name: twingate_calm-perch
+    environment:
+      - TZ=America/Calgary
+      - TWINGATE_NETWORK=cl0ckwerk
+      - TWINGATE_ACCESS_TOKEN=
+      - TWINGATE_REFRESH_TOKEN=
+      - TWINGATE_LABEL_HOSTNAME=DK03
+      - TWINGATE_LABEL_DEPLOYED_BY=docker
+    restart: unless-stopped

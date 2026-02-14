@@ -17,16 +17,16 @@
 - Repositories:
   - Homelab:
     - icon: mdi-github #si-github-#FFFFFF
-      href: https://github.com/alprojects1
+      href: https://github.com/elysiummachines
   - Boilerplates:
     - icon: mdi-github #si-github-#FFFFFF
-      href: https://github.com/alprojects1/home-lab
+      href: https://github.com/elysiummacines/home-lab
   - Cheat-Sheets:
     - icon: mdi-github #si-github-#FFFFFF
-      href: https://github.com/alprojects1/boilerplates
+      href: https://github.com/elysiummachines/boilerplates
   - Scripts:
     - icon: mdi-github #si-github-#FFFFFF
-      href: https://github.com/alprojects1/cheat-sheet
+      href: https://github.com/elysiummachines/cheat-sheet
 
 
 #- Developer:

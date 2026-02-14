@@ -1,0 +1,51 @@
+---
+- name: Deploy via Docker Compose
+  hosts: localhost
+  tasks:
+    - name: Ensure the /compose/kali directory exists
+      file:
+        path: /compose/kali
+        state: directory
+        mode: '0755'
+
+    - name: Create Compose file for Kali 
+      copy:
+        dest: /compose/kali/docker-compose.yml
+        content: |
+          ---
+          services:
+            kali-linux:
+              image: lscr.io/linuxserver/kali-linux:latest
+              container_name: kali-linux
+              ports:
+                - 3004:3004
+                - 3002:3001
+              volumes:
+                - /compose/kali/data:/config
+                - /tmp/.X11-unix:/tmp/.X11-unix
+                - /var/run/docker.sock:/var/run/docker.sock:ro
+              devices:
+                - /dev/dri:/dev/dri
+              shm_size: "1gb"
+              security_opt:
+                - seccomp=unconfined
+                - no-new-privileges=false
+              environment:
+                - PUID=1000
+                - PGID=1000
+                - TZ=America/Calgary
+                #- SUBFOLDER=/kali
+                - TITLE="Gizmo Linux"
+              healthcheck:
+                test: ["CMD-SHELL", "curl --fail http://localhost:3001 || exit 0"]
+                interval: 40s
+                timeout: 10s
+                retries: 3
+              restart: unless-stopped
+
+    - name: Run docker-compose up
+      shell: |
+        docker-compose -f /compose/kali/docker-compose.yml up -d
+      args:
+        chdir: /compose/kali
+

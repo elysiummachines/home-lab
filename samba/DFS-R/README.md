@@ -7,7 +7,6 @@
 **Everything stored inside the AD is replicated between DCs. For example: users, groups, and DNS records. In the current state, Samba does not support the distributed file system replication (`DFS-R`) protocol used for Sysvol replication.** You can't use another distributed filesystem like `GlusterFS` or `Lustre` for `SysVol` Replication because a cluster file system with Samba requires `CTDB` to be able to do it safely. And `CTDB` and AD DC are incompatible.
 
 
-
 ## Key Features:
 
 - ***Data Synchronization*** -  DFS-R (Distributed File System Replication) allows for efficient data replication between Samba servers, ensuring consistency across multiple servers.

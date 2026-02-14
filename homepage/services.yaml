@@ -18,7 +18,7 @@
         widget:
           type: sonarr
           url: "{{HOMEPAGE_VAR_SONARR_URL}}"
-          key:"{{HOMEPAGE_VAR_SONARR_API_KEY}}"
+          key: "{{HOMEPAGE_VAR_SONARR_API_KEY}}"
 
     - Radarr:
         icon: si-radarr #mdi-radar #radarr.png
@@ -28,7 +28,7 @@
         widget:
           type: radarr
           url: "{{HOMEPAGE_VAR_RADARR_URL}}"
-          key:"{{HOMEPAGE_VAR_RADARR_API_KEY}}"
+          key: "{{HOMEPAGE_VAR_RADARR_API_KEY}}"
 
     - qBittorrent:
         icon: si-qbittorrent #mdi-download #qbittorrent.png
@@ -36,10 +36,10 @@
         description: Peer2Peer Client
         ping: "{{HOMEPAGE_VAR_QBITTORRENT_PING}}"
         widget:
-          type: qbittorrent
-          url: "{{HOMEPAGE_VAR_QBITTORRENT_URL}}"
-          username: "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}"
-          password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"
+            type: qbittorrent
+            url: "{{HOMEPAGE_VAR_QBITTORRENT_URL}}"
+            username: "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}"
+            password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"
 
 - Infrastructure & Data:
     - Proxmox:
@@ -68,18 +68,17 @@
 
     - TrueNAS:
         icon: si-truenas
-        href: "{{HOMEPAGE_VAR_TRUENAS_HREF}}"
+        href: https://*************
         description: Network Attached Storage
-        ping: "{{HOMEPAGE_VAR_TRUENAS_PING}}"
+        ping: https://*************
         widget:
           type: truenas
-          url: "{{HOMEPAGE_VAR_TRUENAS_URL}}"
-          username: "{{HOMEPAGE_VAR_TRUENAS_USER}}"
-          password: "{{HOMEPAGE_VAR_TRUENAS_PWD}}"
-          key: "{{OMEPAGE_VAR_TRUENAS_API_KEY}}"
-          enablePools: true
-          nasType: scale
-
+          url: 
+          username: 
+          password: 
+          key: 
+          enablePools: true 
+          nasType: scale 
     - QNAP:
         icon: mdi-nas #si-qnap #qnap.png
         href: "{{HOMEPAGE_VAR_QNAP_HREF}}"
@@ -88,8 +87,8 @@
         widget:
           type: qnap
           url: "{{HOMEPAGE_VAR_QNAP_URL}}"
-          username: "{{HOMEPAGE_VAR_QNAP_USER}}"
-          password: "{{HOMEPAGE_VAR_QNAP_PWD}}"
+          username: Gizmo"{{HOMEPAGE_VAR_QNAP_USER}}"
+          password: Tensai!@#123 "{{HOMEPAGE_VAR_QNAP_PWD}}"
 
 - Service & Host:
     - Pi-hole:
@@ -147,10 +146,15 @@
             url: "{{HOMEPAGE_VAR_AUTHENTIK_URL}}"
             key: "{{HOMEPAGE_VAR_AUTHENTIK_API_KEY}}"
 
-    - Bitwarden:
-        href: "{{HOMEPAGE_VAR_HOME_PASSBOLT_HREF}}"
-        description: Password Organization
-        icon: si-bitwarden #passbolt.png
+    - Speed Tracker:
+        icon: si-speedtest #mdi-speedometer
+        href: "{{HOMEPAGE_VAR_TRACKER_HREF}}"
+        description: Speed History
+        ping: "{{HOMEPAGE_VAR_TRACKER_PING}}"
+        container: Speed Monitor
+        widget:
+            type: speedtest
+            url: "{{HOMEPAGE_VAR_TRACKER_URL}}"
 
     - Twingate:
         href: "{{HOMEPAGE_VAR_TWINGATE_HREF}}"
@@ -170,20 +174,18 @@
 
 
 - Automation & Iot:
-    - Speed Tracker:
-        icon: si-speedtest #mdi-speedometer
-        href: "{{HOMEPAGE_VAR_TRACKER_HREF}}"
-        description: Speed Tracking
-        ping: "{{HOMEPAGE_VAR_TRACKER_PING}}"
-        container: speedtest
-#        widget:
-#            type: speedtest
-#            url: "{{HOMEPAGE_VAR_TRACKER_URL}}"
+
+    - Bitwarden:
+        href: "{{HOMEPAGE_VAR_HOME_BITWARDEN_HREF}}"
+        description: Password Organization
+        ping: "{{HOMEPAGE_VAR_BITWARDEN_PING}}"
+        icon: si-bitwarden #passbolt.png
+
     - Kestra:
         href: "{{HOMEPAGE_VAR_KESTRA_HREF}}"
         description: Logcal Path Automation
         ping: "{{HOMEPAGE_VAR_KESTRA_PING}}"
-        icon: si-testrail ##https://kestra-io.gallerycdn.vsassets.io/extensions/kestra-io/kestra/0.0.1/1692285562923/Microsoft.VisualStudio.Services.Icons.Default
+        icon: si-testrail 
 
     - Ansible Semaphore:
         href: "{{HOMEPAGE_VAR_ANSIBLE_HREF}}"

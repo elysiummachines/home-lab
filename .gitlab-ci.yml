@@ -1,40 +1,120 @@
-# Simple CI for a homelab repo with Markdown, .env, and YAML files
 stages:
   - validate
   - security
+  - build
+  - scan
 
-# YAML Linting – checks syntax and style
+default:
+  interruptible: true
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - when: never
+
+# -----------------------------
+# YAML Lint
+# -----------------------------
 yamllint:
   stage: validate
   image: pipelinecomponents/yamllint:latest
   script:
-    - yamllint .                     # Scans all YAML files in the repo
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"  # Optional: run on MRs
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH       # Always run on default branch
+    - yamllint .
+  allow_failure: false
 
-# Secret Scanning – prevents secrets from being committed
-secret_detection:
-  stage: security
-  image: zricethezav/gitleaks:latest
+# -----------------------------
+# Markdown Lint
+# -----------------------------
+markdown_lint:
+  stage: validate
+  image: node:20-alpine
+  before_script:
+    - npm install -g markdownlint-cli
   script:
-    - gitleaks detect --source . --verbose --no-git
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  allow_failure: true                  # Don't block pipeline if false positives; you can review later
+    - markdownlint "**/*.md"
+  allow_failure: true
 
-# Environment File Check – ensures .env is not committed and .env.example exists
+# -----------------------------
+# Environment File Guard
+# -----------------------------
 env_check:
   stage: validate
   image: alpine:latest
   before_script:
     - apk add --no-cache git
   script:
-    # Check if .env is in the repository (should not be)
-    - if git ls-files | grep -q '^\.env$'; then echo "ERROR: .env file is committed!"; exit 1; fi
-    # Check that .env.example exists (good practice)
-    - if [ ! -f .env.example ]; then echo "WARNING: .env.example not found"; fi
+    - |
+      if git ls-files | grep -q '^\.env$'; then
+        echo "ERROR: .env file is committed!"
+        exit 1
+      fi
+    - |
+      if [ ! -f .env.example ]; then
+        echo "WARNING: .env.example not found"
+      fi
+
+# -----------------------------
+# Secret Scanning (Gitleaks)
+# -----------------------------
+secret_detection:
+  stage: security
+  image: zricethezav/gitleaks:latest
+  script:
+    - gitleaks detect --source . --verbose --no-git
+  allow_failure: true
+
+# -----------------------------
+# Dockerfile Lint (Hadolint)
+# -----------------------------
+dockerfile_lint:
+  stage: validate
+  image: hadolint/hadolint:latest-debian
+  script:
+    - |
+      if [ -f Dockerfile ]; then
+        hadolint Dockerfile
+      else
+        echo "No Dockerfile found, skipping."
+      fi
+  allow_failure: true
+
+# -----------------------------
+# Optional Docker Build
+# Only runs if Dockerfile exists
+# -----------------------------
+docker_build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - |
+      if [ -f Dockerfile ]; then
+        docker build -t homelab-ci-test:latest .
+      else
+        echo "No Dockerfile found, skipping build."
+      fi
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - exists:
+        - Dockerfile
+
+# -----------------------------
+# Optional Trivy Container Scan
+# -----------------------------
+trivy_scan:
+  stage: scan
+  image: aquasec/trivy:latest
+  script:
+    - |
+      if docker image inspect homelab-ci-test:latest > /dev/null 2>&1; then
+        trivy image --severity HIGH,CRITICAL --exit-code 0 homelab-ci-test:latest
+      else
+        echo "No built image found, skipping scan."
+      fi
+  allow_failure: true
+  rules:
+    - exists:
+        - Dockerfile

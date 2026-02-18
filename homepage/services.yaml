@@ -210,7 +210,7 @@
         ping: "{{HOMEPAGE_VAR_CUPS_PING}}"
         icon: mdi-coffee
 
-   # - Home Assistant:
+   #  - Home Assistant:
    #     icon: si-homeassistant
    #     href: "{{HOMEPAGE_VAR_HOME_ASSISTANT_HREF}}"
    #     description: Home Automation

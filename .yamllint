@@ -16,4 +16,6 @@ rules:
     level: warning
 
   line-length:
-    max: 0
+    max: 120
+    level: warning
+    ignore-comments: true

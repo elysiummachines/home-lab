@@ -2,80 +2,212 @@
 services:
   argo_tunnel_1:
     image: cloudflare/cloudflared:latest
-    container_name: _argo
-    command: tunnel --no-autoupdate run --token
+    container_name: argo_tunnel_1
+    command: tunnel --no-autoupdate run --token ${ARGO_TOKEN_1}
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=America/Calgary
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 20M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - cloudflare
 
   argo_tunnel_2:
     image: cloudflare/cloudflared:latest
-    container_name: _argo
-    command: tunnel --no-autoupdate run --token 
+    container_name: argo_tunnel_2
+    command: tunnel --no-autoupdate run --token ${ARGO_TOKEN_2}
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=America/Calgary
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 20M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - cloudflare
 
   argo_tunnel_3:
     image: cloudflare/cloudflared:latest
-    container_name: _argo
-    command: tunnel --no-autoupdate run --token
+    container_name: argo_tunnel_3
+    command: tunnel --no-autoupdate run --token ${ARGO_TOKEN_3}
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=America/Calgary
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 20M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - cloudflare
 
   argo_tunnel_4:
     image: cloudflare/cloudflared:latest
-    container_name: _argo
-    command: tunnel --no-autoupdate run --token
+    container_name: argo_tunnel_4
+    command: tunnel --no-autoupdate run --token ${ARGO_TOKEN_4}
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=America/Calgary
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 20M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - cloudflare
 
   argo_tunnel_5:
     image: cloudflare/cloudflared:latest
-    container_name: _argo
-    command: tunnel --no-autoupdate run --token 
+    container_name: argo_tunnel_5
+    command: tunnel --no-autoupdate run --token ${ARGO_TOKEN_5}
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=America/Calgary
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 20M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - cloudflare
 
   argo_tunnel_6:
     image: cloudflare/cloudflared:latest
-    container_name: _argo
-    command: tunnel --no-autoupdate run --token 
+    container_name: argo_tunnel_6
+    command: tunnel --no-autoupdate run --token ${ARGO_TOKEN_6}
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=America/Calgary
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 20M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - cloudflare
 
   argo_tunnel_7:
     image: cloudflare/cloudflared:latest
-    container_name: _argo
-    command: tunnel --no-autoupdate run --token 
+    container_name: argo_tunnel_7
+    command: tunnel --no-autoupdate run --token ${ARGO_TOKEN_7}
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=America/Calgary
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 20M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - cloudflare
 
   argo_tunnel_8:
     image: cloudflare/cloudflared:latest
-    container_name: _argo
-    command: tunnel --no-autoupdate run --token 
+    container_name: argo_tunnel_8
+    command: tunnel --no-autoupdate run --token ${ARGO_TOKEN_8}
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=America/Calgary
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 20M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - cloudflare
+
+networks:
+  cloudflare:
+    driver: bridge

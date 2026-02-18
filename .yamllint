@@ -1,8 +1,7 @@
 ---
 extends: default
 
-ignore: |
-  ./ansible/playbooks/ansible-*.yaml
+ignore: ./ansible/playbooks/ansible-*.yaml
 
 rules:
   document-start:
@@ -11,11 +10,9 @@ rules:
   line-length:
     max: 160
     level: warning
-    allow-non-breakable-mappings: true
 
   indentation:
     spaces: 2
     indent-sequences: consistent
 
-  truthy:
-    level: warning
+  truthy: disable

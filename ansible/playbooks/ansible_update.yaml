@@ -89,3 +89,4 @@
         - ansible_facts['os_family'] == "RedHat"
         - reboot_check_redhat.rc == 1
       tags: [reboot, redhat, all]
+      

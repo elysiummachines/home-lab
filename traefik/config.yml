@@ -1,7 +1,8 @@
+---
 http:
   routers:
 
-#=== Routes ===#
+  # === Routes === #
     dockge:
       entryPoints:
         - "https"
@@ -164,7 +165,7 @@ http:
         certResolver: cloudflare
       service: proxmox2
 
-#=== Services ===#
+  # === Services === #
   services:
     dockge:
       loadBalancer:
@@ -211,7 +212,7 @@ http:
     pihole2:
       loadBalancer:
         servers:
-            - url: "http://10.100.100.236:80"
+          - url: "http://10.100.100.236:80"
         passHostHeader: true
 
     sonarr:
@@ -268,7 +269,7 @@ http:
           flushInterval: 100ms
         serversTransport: proxmox-transport
 
-#=== Middlewares ===#
+  # === Middlewares === #
   middlewares:
     https-redirectscheme:
       redirectScheme:
@@ -308,7 +309,7 @@ http:
           - default-whitelist
           - default-headers
 
-#=== Servers Transports ===#
+  # === Servers Transports === #
   serversTransports:
     proxmox-transport:
       serverName: "proxmox"

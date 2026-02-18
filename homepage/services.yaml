@@ -1,7 +1,6 @@
----
 - Content & Media:
     - Plex:
-        icon: mdi-plex # si-plex # plex.png
+        icon: mdi-plex  # si-plex # plex.png
         href: "{{HOMEPAGE_VAR_PLEX_HREF}}"
         description: Media Transcoder
         ping: "{{HOMEPAGE_VAR_PLEX_PING}}"
@@ -11,7 +10,7 @@
           key: "{{HOMEPAGE_VAR_PLEX_API_KEY}}"
 
     - Sonarr:
-        icon: si-sonarr # sonarr.png
+        icon: si-sonarr  # sonarr.png
         href: "{{HOMEPAGE_VAR_SONARR_HREF}}"
         description: Series Organization
         ping: "{{HOMEPAGE_VAR_SONARR_PING}}"
@@ -21,7 +20,7 @@
           key: "{{HOMEPAGE_VAR_SONARR_API_KEY}}"
 
     - Radarr:
-        icon: si-radarr # mdi-radar # radarr.png
+        icon: si-radarr  # mdi-radar # radarr.png
         href: "{{HOMEPAGE_VAR_RADARR_HREF}}"
         description: Movie Organization
         ping: "{{HOMEPAGE_VAR_RADARR_PING}}"
@@ -31,7 +30,7 @@
           key: "{{HOMEPAGE_VAR_RADARR_API_KEY}}"
 
     - qBittorrent:
-        icon: si-qbittorrent # mdi-download # qbittorrent.png
+        icon: si-qbittorrent  # mdi-download # qbittorrent.png
         href: "{{HOMEPAGE_VAR_QBITTORRENT_HREF}}"
         description: Peer2Peer Client
         ping: "{{HOMEPAGE_VAR_QBITTORRENT_PING}}"
@@ -43,7 +42,7 @@
 
 - Infrastructure & Data:
     - Proxmox:
-        icon: si-proxmox # mdi-server # proxmox.png
+        icon: si-proxmox  # mdi-server # proxmox.png
         href: "{{HOMEPAGE_VAR_PROXMOX_HREF}}"
         description: Hypervisor 1
         ping: "{{HOMEPAGE_VAR_PROXMOX_PING}}"
@@ -55,7 +54,7 @@
           node: pve
 
     - Proxmox2:
-        icon: si-proxmox # mdi-server # proxmox.png
+        icon: si-proxmox  # mdi-server # proxmox.png
         href: "{{HOMEPAGE_VAR_PROXMOX_HREF_2}}"
         description: Hypervisor 2
         ping: "{{HOMEPAGE_VAR_PROXMOX_PING_2}}"
@@ -81,7 +80,7 @@
           nasType: scale
 
     - QNAP:
-        icon: mdi-nas # si-qnap # qnap.png
+        icon: mdi-nas  # si-qnap # qnap.png
         href: "{{HOMEPAGE_VAR_QNAP_HREF}}"
         description: Storage Network Area
         ping: "{{HOMEPAGE_VAR_QNAP_PING}}"
@@ -93,7 +92,7 @@
 
 - Service & Host:
     - Pi-hole:
-        icon: si-pi-hole # mdi-pi-hole # pi-hole.png
+        icon: si-pi-hole  # mdi-pi-hole # pi-hole.png
         href: "{{HOMEPAGE_VAR_PIHOLE_HREF}}"
         description: Recursive Domain
         ping: "{{HOMEPAGE_VAR_PIHOLE_PING}}"
@@ -103,7 +102,7 @@
           key: "{{HOMEPAGE_VAR_PIHOLE_API_KEY}}"
 
     - Pi-hole2:
-        icon: si-pi-hole # mdi-pi-hole # pi-hole.png
+        icon: si-pi-hole  # mdi-pi-hole # pi-hole.png
         href: "{{HOMEPAGE_VAR_PIHOLE_HREF_2}}"
         description: Forwarding Domain
         ping: "{{HOMEPAGE_VAR_PIHOLE_PING_2}}"
@@ -113,7 +112,7 @@
           key: "{{HOMEPAGE_VAR_PIHOLE_API_KEY_2}}"
 
     - Cloudflare:
-        icon: si-cloudflare # mdi-cloud # cloudflare.png
+        icon: si-cloudflare  # mdi-cloud # cloudflare.png
         href: "{{HOMEPAGE_VAR_CLOUDFLARE_HREF}}"
         description: Mx Tunnel
         ping: "{{HOMEPAGE_VAR_CLOUDFLARE_PING}}"
@@ -125,7 +124,7 @@
           key: "{{HOMEPAGE_VAR_CLOUDFLARE_API_KEY}}"
 
     - Cloudflare2:
-        icon: si-cloudflare # mdi-cloud # cloudflare.png
+        icon: si-cloudflare  # mdi-cloud # cloudflare.png
         href: "{{HOMEPAGE_VAR_CLOUDFLARE_HREF}}"
         description: Px Tunnel
         ping: "{{HOMEPAGE_VAR_CLOUDFLARE_PING}}"
@@ -141,14 +140,14 @@
         href: "{{HOMEPAGE_VAR_AUTHENTIK_HREF}}"
         description: Access Organization
         ping: "{{HOMEPAGE_VAR_AUTHENTIK_PING}}"
-        icon: si-authentik # authentik.png
+        icon: si-authentik  # authentik.png
         widget:
           type: authentik
           url: "{{HOMEPAGE_VAR_AUTHENTIK_URL}}"
           key: "{{HOMEPAGE_VAR_AUTHENTIK_API_KEY}}"
 
     - Speed Tracker:
-        icon: si-speedtest # mdi-speedometer
+        icon: si-speedtest  # mdi-speedometer
         href: "{{HOMEPAGE_VAR_TRACKER_HREF}}"
         description: Speed History
         ping: "{{HOMEPAGE_VAR_TRACKER_PING}}"
@@ -160,10 +159,10 @@
     - Twingate:
         href: "{{HOMEPAGE_VAR_TWINGATE_HREF}}"
         description: Zero Trust
-        icon: si-openlayers # mdi-key # twingate.png
+        icon: si-openlayers  # mdi-key # twingate.png
 
     - Traefik:
-        icon: si-traefikproxy # mdi-traffic-light # traefik.png
+        icon: si-traefikproxy  # mdi-traffic-light # traefik.png
         href: "{{HOMEPAGE_VAR_TRAEFIK_HREF}}"
         description: Proxy Management
         ping: "{{HOMEPAGE_VAR_TRAEFIK_PING}}"
@@ -178,7 +177,7 @@
         href: "{{HOMEPAGE_VAR_HOME_BITWARDEN_HREF}}"
         description: Password Organization
         ping: "{{HOMEPAGE_VAR_BITWARDEN_PING}}"
-        icon: si-bitwarden # passbolt.png
+        icon: si-bitwarden  # passbolt.png
 
     - Kestra:
         href: "{{HOMEPAGE_VAR_KESTRA_HREF}}"
@@ -190,7 +189,7 @@
         href: "{{HOMEPAGE_VAR_ANSIBLE_HREF}}"
         description: LXC & VM Automation
         ping: "{{HOMEPAGE_VAR_ANSIBLE_PING}}"
-        icon: si-ansible # si-ansible-#EE0000
+        icon: si-ansible  # si-ansible-#EE0000
 
     - Cyber Power:
         href: "{{HOMEPAGE_VAR_CYBER_POWER_HREF}}"

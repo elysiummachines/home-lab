@@ -209,14 +209,3 @@
         description: Printer Organization
         ping: "{{HOMEPAGE_VAR_CUPS_PING}}"
         icon: mdi-coffee
-
-   #  - Home Assistant:
-   #     icon: si-homeassistant
-   #     href: "{{HOMEPAGE_VAR_HOME_ASSISTANT_HREF}}"
-   #     description: Home Automation
-   #     ping: "{{HOMEPAGE_VAR_HOME_ASSISTANT_PING}}"
-   #     container: homeassistant
-   #     widget:
-   #       type: homeassistant
-   #       url: "{{HOMEPAGE_VAR_HOME_ASSISTANT_URL}}"
-   #       key: "{{HOMEPAGE_VAR_HOME_ASSISTANT_API_KEY}}"

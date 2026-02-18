@@ -1,19 +1,20 @@
 ---
 services:
   SERVICE_NAME:
-    image:
-    container_name:
+    image: "REPLACE_WITH_IMAGE"
+    container_name: "REPLACE_WITH_NAME"
     ports:
-      - *:*
+      - "HOST_PORT:CONTAINER_PORT"
     volumes:
-      - /*/*/*:/*
+      - "/host/path:/container/path"
     environment:
-      - PUID=*
-      - PGID=*
+      - PUID=REPLACE_WITH_UID
+      - PGID=REPLACE_WITH_GID
       - TZ=America/Calgary
+    restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl --fail http://IP_ADDRESS:8989 || exit 0"]
       interval: 40s
       timeout: 10s
       retries: 3
-    restart: unless-stopped
+

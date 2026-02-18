@@ -17,4 +17,3 @@ services:
       interval: 40s
       timeout: 10s
       retries: 3
-

@@ -1,4 +1,3 @@
----
 # System resources
 - resources:
     cpu: true
@@ -9,23 +8,22 @@
     tempmin: 0
     tempmax: 100
     uptime: true
-    units: metric # Options: imperial or metric
-    refresh: 3000 # Optional: in ms
-    diskUnits: bytes # Option: bytes or bbytes
+    units: metric  # Options: imperial or metric
+    refresh: 3000  # Optional: in ms
+    diskUnits: bytes  # Option: bytes or bbytes
 
-#Storage resources
-#- resources:
-#    label: Mnt
-#    disk:
-#      - /mnt/nfs-lvm
+# Storage resources
+# - resources:
+#     label: Mnt
+#     disk:
+#       - /mnt/nfs-lvm
 
 # Search resources
 - search:
     provider: duckduckgo
     target: _blank
 
-
-# Date&Time resources
+# Date & Time resources
 - datetime:
     text_size: sm
     format:

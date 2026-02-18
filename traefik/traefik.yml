@@ -6,7 +6,7 @@ api:
 log:
   level: DEBUG
 
-accessLog: {}  # must have, or won't get logs by only defining "level: DEBUG"
+accessLog: {}  # must have, or won't get logs by only defining  "level: DEBUG"
 
 entryPoints:
   http:

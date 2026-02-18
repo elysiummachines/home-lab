@@ -1,3 +1,40 @@
-test-job:
+# Simple CI for a homelab repo with Markdown, .env, and YAML files
+stages:
+  - validate
+  - security
+
+# YAML Linting – checks syntax and style
+yamllint:
+  stage: validate
+  image: pipelinecomponents/yamllint:latest
   script:
-    - sleep 600
+    - yamllint .                     # Scans all YAML files in the repo
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"  # Optional: run on MRs
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH       # Always run on default branch
+
+# Secret Scanning – prevents secrets from being committed
+secret_detection:
+  stage: security
+  image: zricethezav/gitleaks:latest
+  script:
+    - gitleaks detect --source . --verbose --no-git
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  allow_failure: true                  # Don't block pipeline if false positives; you can review later
+
+# Environment File Check – ensures .env is not committed and .env.example exists
+env_check:
+  stage: validate
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache git
+  script:
+    # Check if .env is in the repository (should not be)
+    - if git ls-files | grep -q '^\.env$'; then echo "ERROR: .env file is committed!"; exit 1; fi
+    # Check that .env.example exists (good practice)
+    - if [ ! -f .env.example ]; then echo "WARNING: .env.example not found"; fi
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

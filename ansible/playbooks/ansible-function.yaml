@@ -1,8 +1,8 @@
-# Collection of handy function to use 
+# Collection of handy function to use
 ---
 - name: Custom functions on all hosts
   hosts: all
-  become: true 
+  become: true
   tasks:
     - name: Add function block to .bashrc
       ansible.builtin.blockinfile:

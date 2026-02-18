@@ -2,7 +2,7 @@
 ---
 - name: Install essential tools and utilities
   hosts: all
-  become: true 
+  become: true
   tasks:
     - name: Install git, curl, net-tools, htop, vim, wget, zip, and unzip
       ansible.builtin.package:

@@ -1,4 +1,4 @@
-#Automation for install my basics
+# Automation for installing my basics
 ---
 - name: Install essential tools and utilities
   hosts: all

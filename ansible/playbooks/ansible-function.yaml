@@ -1,5 +1,4 @@
 # Collection of handy function to use 
-
 ---
 - name: Custom functions on all hosts
   hosts: all

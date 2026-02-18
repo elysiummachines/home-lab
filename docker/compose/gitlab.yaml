@@ -4,9 +4,9 @@ services:
     image: gitlab/gitlab-ce:17.5.5-ce.0
     container_name: gitlab
     ports:
-      - "3200:22"
-      - "8929:8929"
-      - "4435:443" 
+      - 3200:22
+      - 8929:8929
+      - 4435:443 
     volumes:
       - /compose/gitlab/config:/etc/gitlab
       - /compose/gitlab/logs:/var/log/gitlab

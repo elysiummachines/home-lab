@@ -5,8 +5,8 @@ services:
     container_name: gitlab
     ports:
       - "3200:22"
-      - "8929:8929" #Managed by Traefik
-      - "4435:443"  #Managed by Traefik
+      - "8929:8929"
+      - "4435:443" 
     volumes:
       - /compose/gitlab/config:/etc/gitlab
       - /compose/gitlab/logs:/var/log/gitlab
@@ -18,15 +18,3 @@ services:
       timeout: 10s
       retries: 3
     restart: unless-stopped
-    #labels:
-     # - "traefik.enable=true"
-     # - "traefik.http.routers.gitlab-https.rule=Host('gitlab.alprojects.org')"
-     # - "traefik.http.routers.gitlab-https.entrypoints=asgard"
-     # - "traefik.http.routers.gitlab-https.tls.certresolver=production"
-     # - "traefik.http.services.gitlab-service.loadbalancer.server.port=80"
-    #networks:
-     # - traefik_default
-
-#networks:
-  #traefik_default:
-    #external: true

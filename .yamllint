@@ -8,7 +8,7 @@ rules:
     present: true
 
   line-length:
-    max: 160
+    max: 180
     level: warning
 
   indentation:

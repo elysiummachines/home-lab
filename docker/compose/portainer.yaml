@@ -3,10 +3,10 @@ services:
   portainer:
     image: portainer/portainer-ce:2.33.6
     container_name: portainer
-    #ports:
-      #- 8000:8000
-      #- 9443:9443
-      #- 9000:9000 HTTP access
+   # ports:
+     # - 8000:8000
+     # - 9443:9443
+     # - 9000:9000 HTTP access
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ~/docker/volumes/portainer:/data

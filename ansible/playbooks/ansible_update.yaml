@@ -1,4 +1,3 @@
-# ─────────────────────────────────────────────────────────────
 #  Playbook: update-hosts.yaml
 #  Tags: 8 (update, upgrade, clean, reboot, apt, yum, debian, redhat)
 #  Last Updated: 2024-04-17
@@ -19,8 +18,6 @@
 #   - ansible_update --tags clean
 #   - ansible_update --tags reboot --limit HS01.alprojects.tech
 #   - ansible_update --tags "update,clean" --limit DC01.alprojects.tech
-# ─────────────────────────────────────────────────────────────
-
 ---
 - name: Update Hosts
   hosts: all

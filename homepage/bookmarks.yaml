@@ -4,12 +4,15 @@
   - Cloudflare:
     - icon: mdi-cloud #cloudflare.png
       href: https://dash.cloudflare.com
+
   - Teleport:
     - icon: mdi-hub #teleport.png
       href: https://cl0ckwerk.teleport.sh
+
   - Twingate:
     - icon: mdi-gate #twingate.png
       href: https://cl0ckwerk.twingate.com
+
   - Netbird:
     - icon: mdi-bird #https://netbird.io/_next/static/media/netbird-icon.00225e97.svg
       href: https://app.netbird.io
@@ -18,28 +21,31 @@
   - Homelab:
     - icon: mdi-github #si-github-#FFFFFF
       href: https://github.com/alprojects1
+
   - Boilerplates:
     - icon: mdi-github #si-github-#FFFFFF
       href: https://github.com/alprojects1/home-lab
+
   - Cheat-Sheets:
     - icon: mdi-github #si-github-#FFFFFF
       href: https://github.com/alprojects1/boilerplates
+      
   - Scripts:
     - icon: mdi-github #si-github-#FFFFFF
       href: https://github.com/alprojects1/cheat-sheet
 
 
-#- Developer:
+# - Developer:
 #     - Github:
 #        - abbr: GH
 #          href: https://github.com/
 #
-#- Social:
+# - Social:
 #    - Reddit:
 #        - abbr: RE
 #          href: https://reddit.com/
 #
-#- Entertainment:
+# - Entertainment:
 #    - YouTube:
 #        - abbr: YT
 #          href: https://youtube.com/

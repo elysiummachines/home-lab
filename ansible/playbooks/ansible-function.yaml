@@ -78,4 +78,3 @@
       ansible.builtin.shell: "source {{ ansible_env.HOME }}/.bashrc"
       args:
         executable: /bin/bash
-        

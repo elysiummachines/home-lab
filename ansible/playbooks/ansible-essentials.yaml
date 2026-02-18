@@ -16,4 +16,3 @@
           - zip
           - unzip
         state: present
-        

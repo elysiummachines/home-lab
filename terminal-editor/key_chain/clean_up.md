@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Temp directory for Keychain updates
 TEMP_DIR="/tmp/keychain_update"
 
 # Remove Temp directory

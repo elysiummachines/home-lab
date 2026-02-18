@@ -46,5 +46,5 @@
   - ***Management Interface*** 
       - Both ESXi and Proxmox offer web-based management interfaces to easily configure and monitor your virtual infrastructure. ESXi’s vSphere Client interface is more sophisticated but complex requiring a steeper learning curve. Proxmox’s interface is very intuitive, making it ideal if you prefer a simple, user-friendly management experience. 
 
-##      
+##
 > ESXi and Proxmox have some similar capabilities, but there are some key differences that you should consider based on your priorities and virtualization needs. 

@@ -1,11 +1,12 @@
-accent: '#28b9ff' # Accent color for UI elements
-background: '#191919' # Terminal background color
+---
+accent: '#28b9ff'  # Accent color for UI elements
+background: '#191919'  # Terminal background color
 background_image:
   path: LR03/dark_city_bg.jpg
   opacity: 20
-details: darker # Whether the theme is lighter or darker.
-foreground: '#f1f1f1' # The foreground color.
-terminal_colors: # Ansi escape colors.
+details: darker  # Whether the theme is lighter or darker.
+foreground: '#f1f1f1'  # The foreground color.
+terminal_colors:  # Ansi escape colors.
   bright:
     black: '#666666'
     blue: '#5c78ff'

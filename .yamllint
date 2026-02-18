@@ -14,3 +14,6 @@ rules:
 
   truthy:
     level: warning
+
+  line-length:
+    max: 0

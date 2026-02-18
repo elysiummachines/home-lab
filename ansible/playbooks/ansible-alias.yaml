@@ -1,27 +1,25 @@
 # ─────────────────────────────────────────────────────────────
-#  Playbook: ansible-alias.yaml
-#  Tags: 4 (alias, bashrc, shell, all)
-#  Last Updated: 2025-04-22
-#  Description:
+# Playbook: ansible-alias.yaml
+# Tags: 4 (alias, bashrc, shell, all)
+# Last Updated: 2025-04-22
+# Description:
 #   - Dynamically assembles ~/.bash_aliases using a combination of
 #     default aliases (universal) and host/group-specific fragments
 #   - Copies .j2 alias files into a temp dir, then merges them via
 #     Ansible's `assemble` module into one final alias file
 #   - Ensures ~/.bashrc includes the aliases via a sourcing line
 #   - Applies strict permissions (0600) to the generated file
-#
-#  Why this change:
+# Why this change:
 #   - Previous version used a static `blockinfile`, making it hard
 #     to scale or isolate aliases per host/group.
 #   - The new method enables reusable .j2 fragments, easier testing,
 #     per-host alias sets, and cleaner long-term playbook structure.
-#
-#  Scope:
+# Scope:
 #   - Hosts: all
 #   - Shell: Bash
 #   - OS: Debian-based (or compatible with .bashrc/.bash_aliases)
 #
-#  Sample Usage:
+# Sample Usage:
 #   - ansible-playbook ansible-alias.yaml --tags alias
 #   - ansible-playbook ansible-alias.yaml --limit HS01 --tags alias
 #       # (HS01 receives: default + proxmox/10_ansible + 20_docker)

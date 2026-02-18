@@ -61,7 +61,9 @@ env_check:
 # -----------------------------
 secret_detection:
   stage: security
-  image: zricethezav/gitleaks:latest
+  image:
+    name: zricethezav/gitleaks:latest
+    entrypoint: [""]  # <--- overrides default entrypoint to avoid "unknown command sh"
   script:
     - gitleaks detect --source . --verbose --no-git
   allow_failure: true

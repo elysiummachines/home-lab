@@ -1,5 +1,4 @@
 # best way I do this is create a multiple auto_sshd for different groups, and than write a function in bash_rc to be basic hotkey VERY long Ansible commands 
-
 ---
 - name: Configure SSHD on all hosts
   hosts: all

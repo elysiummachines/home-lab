@@ -1,4 +1,4 @@
-#This is the same as the ssh.yaml, just more restricted and no root access allowed tied down to a single user and group for ssh access
+# This is the same as the ssh.yaml, just more restricted and no root access allowed tied down to a single user and group for ssh access
 ---
 - name: Configure SSHD with more secure settings
   hosts: all
@@ -40,7 +40,7 @@
       ansible.builtin.lineinfile:
         path: /etc/ssh/sshd_config
         regexp: '^AllowGroups'
-        line: 'AllowGroups echo'
+        line: 'AllowGroups admin'
         state: present
 
     # Enable public key authentication

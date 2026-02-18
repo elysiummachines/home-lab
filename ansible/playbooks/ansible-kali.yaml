@@ -48,4 +48,3 @@
         docker-compose -f /compose/kali/docker-compose.yml up -d
       args:
         chdir: /compose/kali
-

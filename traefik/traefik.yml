@@ -1,4 +1,5 @@
-                                                                                            api:
+---
+api:
   dashboard: true
   debug: true
 log:

@@ -16,8 +16,8 @@ services:
       - DB_CONNECTION=sqlite
       - SPEEDTEST_SCHEDULE=0 */1 * * *
       - PRUNE_RESULTS_OLDER_THAN=30
-      - CHART_DATETIME_FORMAT=Y-m-d H:i  #corrected format from wiki link
-      - DATETIME_FORMAT=Y-m-d H:i:s  #corrected standard format from wiki link
+      - CHART_DATETIME_FORMAT=Y-m-d H:i  # corrected format from wiki link
+      - DATETIME_FORMAT=Y-m-d H:i:s  # corrected standard format from wiki link
       - APP_TIMEZONE=America/New_York
       - APP_NAME=MySpeedTracker
       - APP_URL=https://speedtest.net

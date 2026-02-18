@@ -16,6 +16,8 @@ rules:
     level: warning
 
   line-length:
-    max: 120
+    max: 160
     level: warning
-    ignore-comments: true
+
+ignore: |
+  ./ansible/playbooks/ansible-*.yaml

@@ -74,4 +74,3 @@
         state: present
         insertafter: EOF
       tags: [alias, bashrc, shell, all]
-      

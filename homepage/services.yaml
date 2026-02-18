@@ -1,3 +1,4 @@
+---
 - Content & Media:
     - Plex:
         icon: mdi-plex  # si-plex # plex.png
@@ -72,10 +73,10 @@
         ping: https://*************
         widget:
           type: truenas
-          url: 
-          username: 
-          password: 
-          key: 
+          url:
+          username:
+          password:
+          key:
           enablePools: true
           nasType: scale
 

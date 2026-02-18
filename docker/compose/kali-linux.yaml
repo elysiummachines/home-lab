@@ -32,7 +32,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Calgary
-      #- SUBFOLDER=/kali
+      # - SUBFOLDER=/kali
       - TITLE="Gizmo_Linux"
     healthcheck:
       test: ["CMD-SHELL", "curl --fail http://localhost:3001 || exit 0"]

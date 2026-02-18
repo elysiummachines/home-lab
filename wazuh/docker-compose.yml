@@ -42,8 +42,8 @@ services:
       - SSL_KEY=/etc/ssl/filebeat.key
       - API_USERNAME=wazuh-wui
       - API_PASSWORD=MyS3cr37P450r.*-
-      #- PUID=1000  #$PUID
-      #- PGID=1000  #$PGID
+    #  - PUID=1000  # $PUID
+    #  - PGID=1000  # $PGID
     healthcheck:
       test: ["CMD-SHELL", "curl --fail http://localhost:1415 || exit 0"]
       interval: 40s
@@ -59,8 +59,8 @@ services:
       - "9200:9200"
     environment:
       - "OPENSEARCH_JAVA_OPTS=-Xms2g -Xmx2g"
-      - PUID=1000  #$PUID
-      - PGID=1000  #$PGID
+      - PUID=1000  # $PUID
+      - PGID=1000  # $PGID
     ulimits:
       memlock:
         soft: -1
@@ -98,8 +98,8 @@ services:
       - DASHBOARD_PASSWORD=kibanaserver
       - API_USERNAME=wazuh-wui
       - API_PASSWORD=MyS3cr37P450r.*-
-      - PUID=1000  #$PUID
-      - PGID=1000  #$PGID
+      - PUID=1000  # $PUID
+      - PGID=1000  # $PGID
     volumes:
       - ./config/wazuh_indexer_ssl_certs/wazuh.dashboard.pem:/usr/share/wazuh-dashboard/certs/wazuh-dashboard.pem
       - ./config/wazuh_indexer_ssl_certs/wazuh.dashboard-key.pem:/usr/share/wazuh-dashboard/certs/wazuh-dashboard-key.pem

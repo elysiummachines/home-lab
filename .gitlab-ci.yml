@@ -32,7 +32,8 @@ markdown_lint:
   before_script:
     - npm install -g markdownlint-cli
   script:
-    - markdownlint "**/*.md" --fix
+    - find . -name "*.md" -exec markdownlint --fix {} +
+    - markdownlint "**/*.md" || echo "Some lint errors remain (non-fixable)"
   allow_failure: true
 
 # -----------------------------

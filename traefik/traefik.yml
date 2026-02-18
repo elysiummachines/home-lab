@@ -2,9 +2,12 @@
 api:
   dashboard: true
   debug: true
+
 log:
   level: DEBUG
-accessLog: {} #musy have, or won't get logs by only defining "level: Debug" 
+
+accessLog: {}  # must have, or won't get logs by only defining "level: DEBUG"
+
 entryPoints:
   http:
     address: ":80"
@@ -13,27 +16,32 @@ entryPoints:
         entryPoint:
           to: https
           scheme: https
+
   https:
     address: ":443"
+
 serversTransport:
   insecureSkipVerify: true
+
 providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
+
   file:
     filename: /config.yml
+
 certificatesResolvers:
   cloudflare:
     acme:
       email: c.f@elysiummachines.com
       storage: acme.json
       caServer: https://acme-v02.api.letsencrypt.org/directory
-      #caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
       dnsChallenge:
         provider: cloudflare
-        #disablePropagationCheck: true # if issues pulling certificates, disables the need to wait for propagation of the TXT record
-        #delayBeforeCheck: 60s # ensure the TXT record is ready before verification is attempted 
+        # disablePropagationCheck: true  # if issues pulling certificates, disables TXT propagation wait
+        # delayBeforeCheck: 60s  # ensure TXT record is ready before verification
         resolvers:
           - "1.1.1.1:53"
           - "1.0.0.1:53"

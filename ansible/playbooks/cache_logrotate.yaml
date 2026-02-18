@@ -113,4 +113,3 @@
         name: clear_mem_cache.timer
         enabled: true
         state: started
-        

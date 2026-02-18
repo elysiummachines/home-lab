@@ -4,8 +4,7 @@ api:
   debug: true
 log:
   level: DEBUG
-
-accessLog: {}  # must have, or won't get logs by only defining  "level: DEBUG"
+accessLog: {}  # must have, or won't get logs by only defining "level: DEBUG"
 
 entryPoints:
   http:
@@ -15,7 +14,6 @@ entryPoints:
         entryPoint:
           to: https
           scheme: https
-
   https:
     address: ":443"
 
@@ -26,7 +24,6 @@ providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
-
   file:
     filename: /config.yml
 

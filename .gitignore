@@ -1,0 +1,4 @@
+# Environment files
+.env
+.env.*
+homepage/.env

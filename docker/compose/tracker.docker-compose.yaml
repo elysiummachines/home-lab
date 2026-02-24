@@ -1,0 +1,53 @@
+---
+services:
+  tracker:
+    image: lscr.io/linuxserver/speedtest-tracker:latest
+    container_name: speedtest-tracker
+    ports:
+      - "8686:80"
+      - "8443:443"
+    volumes:
+      - /compose/tracker/config:/config
+      - /compose/tracker/ssl-keys:/config/keys
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - APP_KEY=${APP_KEY}
+      - DB_CONNECTION=${DB_CONNECTION}
+      - SPEEDTEST_SCHEDULE=${SPEEDTEST_SCHEDULE}
+      - PRUNE_RESULTS_OLDER_THAN=${PRUNE_RESULTS_OLDER_THAN}
+      - CHART_DATETIME_FORMAT=${CHART_DATETIME_FORMAT}
+      - DATETIME_FORMAT=${DATETIME_FORMAT}
+      - APP_TIMEZONE=${APP_TIMEZONE}
+      - APP_NAME=${APP_NAME}
+      - APP_URL=${APP_URL}
+      - DISPLAY_TIMEZONE=${DISPLAY_TIMEZONE}
+      - CONTENT_WIDTH=${CONTENT_WIDTH}
+      - PUBLIC_DASHBOARD=${PUBLIC_DASHBOARD}
+      - DASHBOARD_POLLING=${DASHBOARD_POLLING}
+      - NOTIFICATION_POLLING=${NOTIFICATION_POLLING}
+      - RESULTS_POLLING=${RESULTS_POLLING}
+      - TELEGRAM_ENABLED=${TELEGRAM_ENABLED}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+    deploy:
+      resources:
+        limits:
+          memory: 350m
+          cpus: "0.5"
+    healthcheck:
+      test:
+        - CMD
+        - pgrep
+        - -f
+        - speedtest-tracker
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

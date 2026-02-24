@@ -1,0 +1,33 @@
+---
+services:
+  ansible:
+    image: python:3.12-slim
+    container_name: ansible
+    volumes:
+      - /compose/playbooks:/ansible/playbooks
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+    command: /bin/bash -c "pip install ansible && tail -f /dev/null"
+    deploy:
+      resources:
+        limits:
+          memory: 800m
+          cpus: "1"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import ansible; print('ok')
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

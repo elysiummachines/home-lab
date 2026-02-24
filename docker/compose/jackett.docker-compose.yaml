@@ -1,0 +1,33 @@
+---
+services:
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    ports:
+      - 9117:9117
+    volumes:
+      - /compose/jackett/data:/config
+      - /compose/jackett/blackhole:/downloads
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/Toronto
+    deploy:
+      resources:
+        limits:
+          memory: 200m
+          cpus: "0.5"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --fail http://localhost:9117 || exit 0
+      interval: 40s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

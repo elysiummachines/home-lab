@@ -1,0 +1,42 @@
+---
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    volumes:
+      - /compose/plex/config:/config
+      - /mnt/media/Anime-Movies:/anime-movies
+      - /mnt/media/Anime-Shows:/anime-shows
+      - /mnt/media/Audio-Books:/audio-books
+      - /mnt/media/Comedy-Specials:/comedy-specials
+      - /mnt/media/Discovery:/discovery
+      - /mnt/media/Documentary:/documentary
+      - /mnt/media/Movies:/movies
+      - /mnt/media/Music:/music
+      - /mnt/media/Shows:/shows
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+      - VERSION=docker
+      - PLEX_CLAIM=${PLEX_CLAIM}
+    deploy:
+      resources:
+        limits:
+          memory: 5g
+          cpus: "6"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --fail http://127.0.0.1:32400/web || exit 1
+      interval: 40s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

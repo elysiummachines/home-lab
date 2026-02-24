@@ -1,0 +1,36 @@
+---
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    ports:
+      - 8989:8989
+    volumes:
+      - /compose/sonarr/data:/config
+      - /mnt/media/Shows:/shows
+      - /mnt/media:/mnt/media
+      - /mnt/media/Anime-Shows:/anime-shows
+      - /mnt/media/incomplete:/incomplete
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    deploy:
+      resources:
+        limits:
+          memory: 600m
+          cpus: "0.1"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --fail http://localhost:8989 || exit 0
+      interval: 40s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

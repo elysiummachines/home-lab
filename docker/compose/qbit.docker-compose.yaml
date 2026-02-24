@@ -1,0 +1,42 @@
+---
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    volumes:
+      - /compose/qbit/config:/config
+      - /mnt/media/incomplete:/incomplete
+      - /mnt/media/Anime-Movies:/anime-movies
+      - /mnt/media/Anime-Shows:/anime-shows
+      - /mnt/media/Audio-Books:/audio-books
+      - /mnt/media/Comedy-Specials:/comedy-specials
+      - /mnt/media/Discovery:/discovery
+      - /mnt/media/Documentary:/documentary
+      - /mnt/media/Movies:/movies
+      - /mnt/media/Music:/music
+      - /mnt/media/Shows:/shows
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+      - WEBUI_PORT=8080
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 5G
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://127.0.0.1:8080 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

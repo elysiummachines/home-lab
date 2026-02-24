@@ -1,0 +1,28 @@
+---
+services:
+  claude-telegram-bot:
+    build: .
+    container_name: claude-telegram-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+          cpus: "1"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import anthropic; import telebot; print('ok')
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

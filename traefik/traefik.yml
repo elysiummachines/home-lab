@@ -4,7 +4,7 @@ api:
   debug: true
 log:
   level: DEBUG
-accessLog: {}  # must have, or won't get logs by only defining level DEBUG
+accessLog: {}
 entryPoints:
   http:
     address: ":80"
@@ -15,6 +15,7 @@ entryPoints:
           scheme: https
   https:
     address: ":443"
+    http3: {}
 serversTransport:
   insecureSkipVerify: true
 providers:
@@ -32,8 +33,8 @@ certificatesResolvers:
       # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
       dnsChallenge:
         provider: cloudflare
-        # disablePropagationCheck: true  # if issues pulling certificates, disables TXT propagation wait
-        # delayBeforeCheck: 60s  # ensure TXT record is ready before verification
+        # disablePropagationCheck: true # if issues pulling certificates, disables the need to wait for propagation of the TXT record
+        # delayBeforeCheck: 60s # ensure the TXT record is ready before verification is attempted
         resolvers:
           - "1.1.1.1:53"
           - "1.0.0.1:53"

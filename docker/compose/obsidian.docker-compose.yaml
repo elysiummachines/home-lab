@@ -1,0 +1,47 @@
+---
+services:
+  obsidian:
+    image: lscr.io/linuxserver/obsidian:latest
+    container_name: obsidian
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - "33000:3000"
+      - "33001:3001"
+    volumes:
+      - /compose/obsidian/config:/config
+      - /compose/obsidian/dir:/dir
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - CUSTOM_PORT=3000
+      - CUSTOM_HTTPS_PORT=3001
+      - CUSTOM_USER=${CUSTOM_USER}
+      - PASSWORD=${PASSWORD}
+      - TITLE=${TITLE}
+      - ELECTRON_DISABLE_SANDBOX=true
+      - LIBGL_ALWAYS_SOFTWARE=1
+      - APP_ARGS=--disable-gpu --disable-software-rasterizer --no-sandbox
+    shm_size: "1gb"
+    deploy:
+      resources:
+        limits:
+          memory: 3g
+          cpus: "2"
+    healthcheck:
+      test:
+        - CMD
+        - pgrep
+        - -f
+        - obsidian
+      interval: 40s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

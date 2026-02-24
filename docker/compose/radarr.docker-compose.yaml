@@ -1,0 +1,35 @@
+---
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    ports:
+      - 7878:7878
+    volumes:
+      - /compose/radarr/data:/config
+      - /mnt/media/Movies:/movies
+      - /mnt/media:/mnt/media
+      - /mnt/media/Anime-Movies:/anime-movies
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    deploy:
+      resources:
+        limits:
+          memory: 600m
+          cpus: "1"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --fail http://localhost:7878 || exit 0
+      interval: 40s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

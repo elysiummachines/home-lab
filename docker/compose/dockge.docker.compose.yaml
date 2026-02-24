@@ -1,0 +1,39 @@
+---
+services:
+  dockge:
+    image: louislam/dockge:1
+    container_name: dockge
+    ports:
+      - "5001:5001"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /compose/dockge/data:/app/data
+      - /compose:/compose
+    environment:
+      - DOCKGE_STACKS_DIR=/compose
+      - DOCKGE_ENABLE_CONSOLE=true
+    networks:
+      - dockge_default
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+          cpus: "1"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --fail http://localhost:5001 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+networks:
+  dockge_default:
+    external: true

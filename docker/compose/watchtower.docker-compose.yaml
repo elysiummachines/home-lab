@@ -1,0 +1,32 @@
+---
+services:
+  watchtower:
+    image: containrrr/watchtower:1.7.1
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_LABEL_ENABLE=true
+      - WATCHTOWER_SCHEDULE=0 0 4 * * *
+      - TZ=America/Winnipeg
+    deploy:
+      resources:
+        limits:
+          memory: 100m
+          cpus: "0.5"
+    healthcheck:
+      test:
+        - CMD
+        - /watchtower
+        - --version
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

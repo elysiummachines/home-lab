@@ -1,0 +1,77 @@
+---
+services:
+  insight-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: insight-api
+    ports:
+      - 6100:6100
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+      - ConnectionStrings__DefaultConnection=Host=insight-db;Port=5432;Database=insightdb;Username=USSER_NAME;Password=PASS_WORD;
+    depends_on:
+      db:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 100m
+          cpus: "0.5"
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:6100/
+      interval: 40s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - insight-network
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  db:
+    image: postgres:15
+    container_name: insight-db
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: insightdb
+      POSTGRES_USER: USER_NAME
+      POSTGRES_PASSWORD: PASS_WORD
+    volumes:
+      - /compose/insight/data:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 100m
+          cpus: "0.5"
+    restart: unless-stopped
+    networks:
+      - insight-network
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres -d insightdb
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+networks:
+  insight-network:
+    driver: bridge

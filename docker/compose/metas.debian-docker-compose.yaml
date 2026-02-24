@@ -1,0 +1,43 @@
+---
+services:
+  metasploit:
+    build: .
+    container_name: metas-debian
+    ports:
+      - 5432:5432
+      - 6767:80
+      - 5522:22
+    volumes:
+      - /compose/metas-debian/data:/data
+      - /compose/metas-debian/config:/opt/metasploit-framework/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+    stdin_open: true
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 850m
+          cpus: "1"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --fail http://127.0.0.1:6767 || exit 0
+      interval: 40s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - kali_default
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+networks:
+  kali_default:
+    external: true

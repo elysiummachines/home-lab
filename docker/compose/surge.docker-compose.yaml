@@ -1,0 +1,43 @@
+---
+services:
+  surge:
+    image: ghcr.io/surge-downloader/surge:latest
+    container_name: surge
+    # ports:
+    #   - 1700:1700
+    volumes:
+      - ~/docker/volumes/surge/downloads:/downloads
+      - ~/docker/volumes/surge/config:/root/.surge
+    environment:
+      - TZ=UTC
+    restart: unless-stopped
+    # healthcheck:
+    #   test: ["CMD", "surge", "server", "status"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.surge-secure.entrypoints=https"
+      - "traefik.http.routers.surge-secure.rule=Host(`surge.local.jacinto.cc`)"
+      - "traefik.http.routers.surge-secure.tls=true"
+      - "traefik.http.routers.surge-secure.tls.certresolver=cloudflare"
+      - "traefik.http.routers.surge-secure.service=surge"
+      - "traefik.http.services.surge.loadbalancer.server.port=1700"
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,41 @@
+---
+services:
+  metasploitable2:
+    image: tleemcjr/metasploitable2
+    container_name: metas
+    ports:
+      - 8888:8888
+      - 8787:80
+      - 4422:22
+    volumes:
+      - /compose/metas/data:/data
+      - /compose/metas/certs:/usr/local/share/ca-certificates
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Calgary
+    deploy:
+      resources:
+        limits:
+          memory: 450m
+          cpus: "0.5"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --fail http://localhost:80 || exit 0
+      interval: 40s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - kali_default
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+networks:
+  kali_default:
+    external: true

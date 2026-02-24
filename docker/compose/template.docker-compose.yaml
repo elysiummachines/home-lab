@@ -1,0 +1,32 @@
+---
+services:
+  SERVICE_NAME:
+    image: "REPLACE_WITH_IMAGE"
+    container_name: "REPLACE_WITH_NAME"
+    ports:
+      - "HOST_PORT:CONTAINER_PORT"
+    volumes:
+      - "/host/path:/container/path"
+    environment:
+      - PUID=REPLACE_WITH_UID
+      - PGID=REPLACE_WITH_GID
+      - TZ=America/Calgary
+    deploy:
+      resources:
+        limits:
+          memory: REPLACE_WITH_RAMm
+          cpus: "REPLACE_WITH_CPU"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --fail http://localhost:CONTAINER_PORT || exit 1
+      interval: 40s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

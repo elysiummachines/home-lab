@@ -1,0 +1,38 @@
+---
+services:
+  portainer:
+    image: portainer/portainer-ce:2.33.6
+    container_name: portainer
+    ports:
+      - 9443:9443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /compose/portainer/portainer_data:/data
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+    extra_hosts:
+      - "node2-prod:${NODE2}"
+      - "node3-prod:${NODE3}"
+      - "node4-prod:${NODE4}"
+      - "node5-prod:${NODE5}"
+    deploy:
+      resources:
+        limits:
+          memory: 150m
+          cpus: "0.5"
+    healthcheck:
+      test:
+        - CMD
+        - /portainer
+        - --version
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

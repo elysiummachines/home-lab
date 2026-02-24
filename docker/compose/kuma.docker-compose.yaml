@@ -1,0 +1,32 @@
+---
+services:
+  uptime-kuma:
+    image: docker.io/louislam/uptime-kuma:2.0.2
+    container_name: uptime-kuma
+    ports:
+      - 3001:3001
+    volumes:
+      - /compose/uptime-kuma/data:/app/data
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Winnipeg
+    deploy:
+      resources:
+        limits:
+          memory: 275m
+          cpus: "1"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --fail http://localhost:3001 || exit 0
+      interval: 40s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

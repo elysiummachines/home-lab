@@ -1,0 +1,30 @@
+---
+services:
+  couchdb:
+    image: couchdb:3
+    container_name: couchdb
+    ports:
+      - "5984:5984"
+    volumes:
+      - /compose/couchdb/data:/opt/couchdb/data
+      - /compose/couchdb/config:/opt/couchdb/etc/local.d
+    environment:
+      - COUCHDB_USER=${COUCHDB_USER}
+      - COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+          cpus: "1"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -u ${COUCHDB_USER}:${COUCHDB_PASSWORD} http://localhost:5984/_up || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

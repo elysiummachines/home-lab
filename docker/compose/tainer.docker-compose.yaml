@@ -31,6 +31,7 @@ services:
       - traefik.http.routers.tainer-secure.rule=Host(`tainer.local.jacinto.cc`)
       - traefik.http.routers.tainer-secure.tls=true
       - traefik.http.routers.tainer-secure.tls.certresolver=cloudflare
+      - traefik.http.routers.tainer-secure.middlewares=secured@file
       - traefik.http.routers.tainer-secure.service=tainer
       - traefik.http.services.tainer.loadbalancer.server.port=3000
 

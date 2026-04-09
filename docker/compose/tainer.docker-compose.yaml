@@ -1,0 +1,39 @@
+---
+services:
+  tainer:
+    image: tainersh/tainer:1.3.2
+    container_name: tainer
+    # ports:
+    #   - "3000:3000"
+    volumes:
+      - ~/docker/volumes/tainer:/app/data
+      # - ./data:/app/data
+    environment:
+      PUID: "1001"
+      PGID: "1001"
+      TZ: America/Calgary
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1G
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.tainer-secure.entrypoints=https
+      - traefik.http.routers.tainer-secure.rule=Host(`tainer.local.jacinto.cc`)
+      - traefik.http.routers.tainer-secure.tls=true
+      - traefik.http.routers.tainer-secure.tls.certresolver=cloudflare
+      - traefik.http.routers.tainer-secure.service=tainer
+      - traefik.http.services.tainer.loadbalancer.server.port=3000
+
+networks:
+  proxy:
+    external: true

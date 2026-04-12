@@ -6,7 +6,7 @@ http:
     dockge:
       entryPoints:
         - "https"
-      rule: "Host(`dockge.local.jacinto.cc`)"
+      rule: "Host(`dockge.local.domain_name`)"
       middlewares:
         - secured
       tls:
@@ -16,7 +16,7 @@ http:
     uptime-kuma:
       entryPoints:
         - "https"
-      rule: "Host(`kuma.local.jacinto.cc`)"
+      rule: "Host(`kuma.local.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -26,7 +26,7 @@ http:
     portainer:
       entryPoints:
         - "https"
-      rule: "Host(`portainer-n1.local.jacinto.cc`)"
+      rule: "Host(`portainer-n1.local.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -36,7 +36,7 @@ http:
     tracker:
       entryPoints:
         - "https"
-      rule: "Host(`tracker-speed.local.jacinto.cc`)"
+      rule: "Host(`tracker-speed.local.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -46,7 +46,7 @@ http:
     wazuh.dashboard:
       entryPoints:
         - "https"
-      rule: "Host(`xdr-siem.local.jacinto.cc`)"
+      rule: "Host(`xdr-siem.local.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -56,7 +56,7 @@ http:
     obsidian:
       entryPoints:
         - "https"
-      rule: "Host(`notes-draw.local.jacinto.cc`)"
+      rule: "Host(`notes-draw.local.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -66,7 +66,7 @@ http:
     pihole:
       entryPoints:
         - "https"
-      rule: "Host(`pihole.local.jacinto.cc`)"
+      rule: "Host(`pihole.local.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -76,7 +76,7 @@ http:
     pihole2:
       entryPoints:
         - "https"
-      rule: "Host(`pihole2.local.jacinto.cc`)"
+      rule: "Host(`pihole2.local.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -86,7 +86,7 @@ http:
     sonarr:
       entryPoints:
         - "https"
-      rule: "Host(`sonarr.local.jacinto.cc`)"
+      rule: "Host(`sonarr.local.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -96,7 +96,7 @@ http:
     radarr:
       entryPoints:
         - "https"
-      rule: "Host(`radarr.local.jacinto.cc`)"
+      rule: "Host(`radarr.local.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -106,7 +106,7 @@ http:
     gitlab:
       entryPoints:
         - "https"
-      rule: "Host(`gitlab.local.jacinto.cc`)"
+      rule: "Host(`gitlab.local.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -116,7 +116,7 @@ http:
     kali-linux:
       entryPoints:
         - "https"
-      rule: "Host(`kali.local.jacinto.cc`)"
+      rule: "Host(`kali.local.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -126,7 +126,7 @@ http:
     homepage:
       entryPoints:
         - "https"
-      rule: "Host(`homepage.local.jacinto.cc`)"
+      rule: "Host(`homepage.local.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -136,7 +136,7 @@ http:
     sonarqube:
       entryPoints:
         - "https"
-      rule: "Host(`sonarqube.local.jacinto.cc`)"
+      rule: "Host(`sonarqube.local.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -146,7 +146,7 @@ http:
     proxmox1:
       entryPoints:
         - "https"
-      rule: "Host(`proxmox1.local.jacinto.cc`)"
+      rule: "Host(`proxmox1.local.domain_name`)"
       middlewares:
         - default-headers
         - proxmox-timeout
@@ -157,7 +157,7 @@ http:
     proxmox2:
       entryPoints:
         - "https"
-      rule: "Host(`proxmox2.local.jacinto.cc`)"
+      rule: "Host(`proxmox2.local.domain_name`)"
       middlewares:
         - default-headers
         - proxmox-timeout
@@ -170,37 +170,37 @@ http:
     dockge:
       loadBalancer:
         servers:
-          - url: "http://10.100.100.234:5001"
+          - url: "http://IP_ADDRESS:5001"
         passHostHeader: true
 
     uptime-kuma:
       loadBalancer:
         servers:
-          - url: "http://10.100.100.234:3001"
+          - url: "http://IP_ADDRESS:3001"
         passHostHeader: true
 
     portainer:
       loadBalancer:
         servers:
-          - url: "https://10.100.100.234:9443"
+          - url: "https://IP_ADDRESS:9443"
         passHostHeader: true
 
     tracker:
       loadBalancer:
         servers:
-          - url: "http://10.100.100.234:8686"
+          - url: "http://IP_ADDRESS:8686"
         passHostHeader: true
 
     wazuh.dashboard:
       loadBalancer:
         servers:
-          - url: "https://10.100.100.234:7443"
+          - url: "https://IP_ADDRESS:7443"
         passHostHeader: true
 
     obsidian:
       loadBalancer:
         servers:
-          - url: "https://10.100.100.234:33001"
+          - url: "https://IP_ADDRESS:33001"
         passHostHeader: true
 
     pihole:
@@ -218,37 +218,37 @@ http:
     sonarr:
       loadBalancer:
         servers:
-          - url: "http://10.100.100.234:8989"
+          - url: "http://IP_ADDRESS:8989"
         passHostHeader: true
 
     radarr:
       loadBalancer:
         servers:
-          - url: "http://10.100.100.234:7878"
+          - url: "http://IP_ADDRESS:7878"
         passHostHeader: true
 
     gitlab:
       loadBalancer:
         servers:
-          - url: "https://10.100.100.234:8929"
+          - url: "https://IP_ADDRESS:8929"
         passHostHeader: true
 
     kali-linux:
       loadBalancer:
         servers:
-          - url: "https://10.100.100.234:3002"
+          - url: "https://IP_ADDRESS:3002"
         passHostHeader: true
 
     homepage:
       loadBalancer:
         servers:
-          - url: "http://10.100.100.234:3000"
+          - url: "http://IP_ADDRESS:3000"
         passHostHeader: true
 
     sonarqube:
       loadBalancer:
         servers:
-          - url: "http://10.100.100.234:9000"
+          - url: "http://IP_ADDRESS:9000"
         passHostHeader: true
 
     proxmox1:

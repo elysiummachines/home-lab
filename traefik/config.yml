@@ -1,8 +1,7 @@
----
 http:
   routers:
 
-  # === Routes === #
+# === Routes === #
     dockge:
       entryPoints:
         - "https"
@@ -13,12 +12,32 @@ http:
         certResolver: cloudflare
       service: dockge
 
+    dockge3:
+      entryPoints:
+        - "https"
+      rule: "Host(`dockge3.local.domain_name`)"
+      middlewares:
+        - secured
+      tls:
+        certResolver: cloudflare
+      service: dockge3
+
+    dockge4:
+      entryPoints:
+        - "https"
+      rule: "Host(`dockge4.local.domain_name`)"
+      middlewares:
+        - secured
+      tls:
+        certResolver: cloudflare
+      service: dockge4
+
     uptime-kuma:
       entryPoints:
         - "https"
       rule: "Host(`kuma.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured
       tls:
         certResolver: cloudflare
       service: uptime-kuma
@@ -28,7 +47,7 @@ http:
         - "https"
       rule: "Host(`portainer-n1.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured
       tls:
         certResolver: cloudflare
       service: portainer
@@ -38,7 +57,7 @@ http:
         - "https"
       rule: "Host(`tracker-speed.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured
       tls:
         certResolver: cloudflare
       service: tracker
@@ -48,7 +67,7 @@ http:
         - "https"
       rule: "Host(`xdr-siem.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured
       tls:
         certResolver: cloudflare
       service: wazuh.dashboard
@@ -58,7 +77,7 @@ http:
         - "https"
       rule: "Host(`notes-draw.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured
       tls:
         certResolver: cloudflare
       service: obsidian
@@ -68,7 +87,7 @@ http:
         - "https"
       rule: "Host(`pihole.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured
       tls:
         certResolver: cloudflare
       service: pihole
@@ -78,7 +97,7 @@ http:
         - "https"
       rule: "Host(`pihole2.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured
       tls:
         certResolver: cloudflare
       service: pihole2
@@ -88,7 +107,7 @@ http:
         - "https"
       rule: "Host(`sonarr.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured-no-crowdsec
       tls:
         certResolver: cloudflare
       service: sonarr
@@ -98,15 +117,55 @@ http:
         - "https"
       rule: "Host(`radarr.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured-no-crowdsec
       tls:
         certResolver: cloudflare
       service: radarr
 
+    jackett:
+      entryPoints:
+        - "https"
+      rule: "Host(`jackett.local.domain_name`)"
+      middlewares:
+        - secured
+      tls:
+        certResolver: cloudflare
+      service: jackett
+
+    qbittorrent:
+      entryPoints:
+        - "https"
+      rule: "Host(`qbit-local.domain_name`)"
+      middlewares:
+        - secured-no-crowdsec
+      tls:
+        certResolver: cloudflare
+      service: qbittorrent
+
+    plex:
+      entryPoints:
+        - "https"
+      rule: "Host(`mps-box.external.domain_name`) || Host(`plex.local.domain_name`)"
+      middlewares:
+        - secured-no-crowdsec
+      tls:
+        certResolver: cloudflare
+      service: plex
+
+    jellyfin:
+      entryPoints:
+        - "https"
+      rule: "Host(`jellyfin.local.domain_name`)"
+      middlewares:
+        - secured-no-crowdsec
+      tls:
+        certResolver: cloudflare
+      service: jellyfin
+
     gitlab:
       entryPoints:
         - "https"
-      rule: "Host(`gitlab.local.domain_name`)"
+      rule: "Host(`gitlab.local.domain_name`) || Host(`asgard-gitlab.external.domain_name`)"
       middlewares:
         - default-headers
       tls:
@@ -118,7 +177,7 @@ http:
         - "https"
       rule: "Host(`kali.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured
       tls:
         certResolver: cloudflare
       service: kali-linux
@@ -128,7 +187,7 @@ http:
         - "https"
       rule: "Host(`homepage.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured
       tls:
         certResolver: cloudflare
       service: homepage
@@ -138,7 +197,7 @@ http:
         - "https"
       rule: "Host(`sonarqube.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured
       tls:
         certResolver: cloudflare
       service: sonarqube
@@ -148,7 +207,7 @@ http:
         - "https"
       rule: "Host(`proxmox1.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured
         - proxmox-timeout
       tls:
         certResolver: cloudflare
@@ -159,15 +218,48 @@ http:
         - "https"
       rule: "Host(`proxmox2.local.domain_name`)"
       middlewares:
-        - default-headers
+        - secured
         - proxmox-timeout
       tls:
         certResolver: cloudflare
       service: proxmox2
 
-  # === Services === #
+    qnap:
+      entryPoints:
+        - "https"
+      rule: "Host(`qnap.local.domain_name`)"
+      middlewares:
+        - secured
+      tls:
+        certResolver: cloudflare
+      service: qnap
+
+    opnsense:
+      entryPoints:
+        - "https"
+      rule: "Host(`opn-sense.local.domain_name`)"
+      middlewares:
+        - secured
+        - no-http3
+      tls:
+        certResolver: cloudflare
+      service: opnsense
+
+# === Services === #
   services:
     dockge:
+      loadBalancer:
+        servers:
+          - url: "http://IP_ADDRESS:5001"
+        passHostHeader: true
+
+    dockge3:
+      loadBalancer:
+        servers:
+          - url: "http://IP_ADDRESS:5001"
+        passHostHeader: true
+
+    dockge4:
       loadBalancer:
         servers:
           - url: "http://IP_ADDRESS:5001"
@@ -206,13 +298,13 @@ http:
     pihole:
       loadBalancer:
         servers:
-          - url: "http://10.100.100.235:80"
+          - url: "http://IP_ADDRESS:80"
         passHostHeader: true
 
     pihole2:
       loadBalancer:
         servers:
-          - url: "http://10.100.100.236:80"
+            - url: "http://IP_ADDRESS:80"
         passHostHeader: true
 
     sonarr:
@@ -227,10 +319,34 @@ http:
           - url: "http://IP_ADDRESS:7878"
         passHostHeader: true
 
+    jackett:
+      loadBalancer:
+        servers:
+          - url: "http://IP_ADDRESS:9117"
+        passHostHeader: true
+
+    qbittorrent:
+      loadBalancer:
+        servers:
+          - url: "http://IP_ADDRESS:8080"
+        passHostHeader: true
+
+    plex:
+      loadBalancer:
+        servers:
+          - url: "https://IP_ADDRESS:32400"
+        passHostHeader: true
+
+    jellyfin:
+      loadBalancer:
+        servers:
+          - url: "http://IP_ADDRESS:8096"
+        passHostHeader: true
+
     gitlab:
       loadBalancer:
         servers:
-          - url: "https://IP_ADDRESS:8929"
+          - url: "http://IP_ADDRESS:8929"
         passHostHeader: true
 
     kali-linux:
@@ -254,7 +370,7 @@ http:
     proxmox1:
       loadBalancer:
         servers:
-          - url: "https://10.100.100.240:8006"
+          - url: "https://IP_ADDRESS:8006"
         passHostHeader: true
         responseForwarding:
           flushInterval: 100ms
@@ -263,13 +379,26 @@ http:
     proxmox2:
       loadBalancer:
         servers:
-          - url: "https://10.100.100.239:8006"
+          - url: "https://IP_ADDRESS:8006"
         passHostHeader: true
         responseForwarding:
           flushInterval: 100ms
         serversTransport: proxmox-transport
 
-  # === Middlewares === #
+    qnap:
+      loadBalancer:
+        servers:
+          - url: "https://IP_ADDRESS:1148"
+        passHostHeader: true
+
+    opnsense:
+      loadBalancer:
+        servers:
+          - url: "https://IP_ADDRESS:443"
+        passHostHeader: true
+        serversTransport: opnsense-transport
+
+# === Middlewares === #
   middlewares:
     https-redirectscheme:
       redirectScheme:
@@ -288,6 +417,8 @@ http:
         customFrameOptionsValue: SAMEORIGIN
         customRequestHeaders:
           X-Forwarded-Proto: https
+         # X-Forwarded-For: ""
+         # X-Real-IP: ""
 
     proxmox-timeout:
       buffering:
@@ -302,15 +433,54 @@ http:
           - "192.168.0.0/16"
           - "172.16.0.0/12"
           - "10.0.0.0/8"
+          - "40.40.40.0/24"
+
+    crowdsec-bouncer:
+      forwardAuth:
+        address: http://crowdsec-bouncer:8080/api/v1/forwardAuth
+        trustForwardHeader: true
+        maxBodySize: 1048576
 
     secured:
       chain:
         middlewares:
           - default-whitelist
           - default-headers
+          - crowdsec-bouncer
 
-  # === Servers Transports === #
+    secured-no-crowdsec:
+      chain:
+        middlewares:
+          - default-whitelist
+          - default-headers
+
+    no-http3:
+      headers:
+        customResponseHeaders:
+          Alt-Svc: "none"
+
+# === Servers Transports === #
   serversTransports:
     proxmox-transport:
       serverName: "proxmox"
       insecureSkipVerify: true
+    opnsense-transport:
+      insecureSkipVerify: true
+
+
+tcp:
+  routers:
+
+# === Routes === #
+    gitlab-ssh:
+      entryPoints:
+        - "ssh-gitlab"
+      rule: "HostSNI(`*`)"
+      service: gitlab-ssh
+
+# === Services === #
+  services:
+    gitlab-ssh:
+      loadBalancer:
+        servers:
+          - address: "IP_ADDRESS:3200"

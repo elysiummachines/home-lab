@@ -1,8 +1,9 @@
 ---
 services:
   traefik:
-    image: traefik:v3.3.7
+    image: traefik:v3.6.10
     container_name: traefik
+    restart: unless-stopped
     security_opt:
       - no-new-privileges:true
     networks:
@@ -12,9 +13,10 @@ services:
       - 443:443
       - 443:443/tcp
       - 443:443/udp
+      - 3200:3200
     environment:
       CF_DNS_API_TOKEN_FILE: /run/secrets/cf_api_token
-      # CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN} # if using .env
+    # CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN} # if using .env
       TRAEFIK_DASHBOARD_CREDENTIALS: ${TRAEFIK_DASHBOARD_CREDENTIALS}
     secrets:
       - cf_api_token
@@ -25,6 +27,7 @@ services:
       - ./data/traefik.yml:/traefik.yml:ro
       - ./data/acme.json:/acme.json
       - ./data/config.yml:/config.yml:ro
+      - /var/log/traefik:/logs
     deploy:
       resources:
         limits:
@@ -39,22 +42,21 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s
-    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.entrypoints=http"
-      - "traefik.http.routers.traefik.rule=Host(`traefik-dashboard.local.jacinto.cc`)"
+      - "traefik.http.routers.traefik.rule=Host(`traefik-dashboard.local.domain_name`)"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}"
       - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
       - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
       - "traefik.http.routers.traefik-secure.entrypoints=https"
-      - "traefik.http.routers.traefik-secure.rule=Host(`traefik-dashboard.local.jacinto.cc`)"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik-dashboard.local.domain_name`)"
       - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
       - "traefik.http.routers.traefik-secure.tls=true"
       - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
-      - "traefik.http.routers.traefik-secure.tls.domains[0].main=local.jacinto.cc"
-      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.local.jacinto.cc"
+      - "traefik.http.routers.traefik-secure.tls.domains[0].main=local.domain_name"
+      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.local.domain_name"
       - "traefik.http.routers.traefik-secure.service=api@internal"
 
 secrets:

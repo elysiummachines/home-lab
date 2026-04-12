@@ -1,0 +1,148 @@
+---
+services:
+  # ===== PostgreSQL ===== #
+  authentik-postgres:
+    image: postgres:16-alpine
+    container_name: authentik-postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ~/docker/volumes/authentik/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${POSTGRES_DB} -U ${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    networks:
+      - proxy
+  # ===== Redis ===== #
+  authentik-redis:
+    image: redis:alpine
+    container_name: authentik-redis
+    command: --save 60 1 --loglevel warning
+    volumes:
+      - ~/docker/volumes/authentik/redis:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 128M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    networks:
+      - proxy
+  # ===== Authentik Server ===== #
+  authentik-server:
+    image: ghcr.io/goauthentik/server:2024.12.3
+    container_name: authentik-server
+    command: server
+    environment:
+      - AUTHENTIK_REDIS__HOST=authentik-redis
+      - AUTHENTIK_POSTGRESQL__HOST=authentik-postgres
+      - AUTHENTIK_POSTGRESQL__USER=${POSTGRES_USER}
+      - AUTHENTIK_POSTGRESQL__NAME=${POSTGRES_DB}
+      - AUTHENTIK_POSTGRESQL__PASSWORD=${POSTGRES_PASSWORD}
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY}
+      - AUTHENTIK_ERROR_REPORTING__ENABLED=false
+      - AUTHENTIK_LOG_LEVEL=info
+    volumes:
+      - ~/docker/volumes/authentik/media:/media
+      - ~/docker/volumes/authentik/custom-templates:/templates
+    depends_on:
+      authentik-postgres:
+        condition: service_healthy
+      authentik-redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "ak healthcheck || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.authentik-secure.entrypoints=https
+      - traefik.http.routers.authentik-secure.rule=Host(`auth.local.DOMAIN_NAME`)
+      - traefik.http.routers.authentik-secure.tls=true
+      - traefik.http.routers.authentik-secure.tls.certresolver=cloudflare
+      - traefik.http.routers.authentik-secure.service=authentik
+      - traefik.http.services.authentik.loadbalancer.server.port=9000
+      - traefik.http.routers.authentik-secure.middlewares=default-headers@file
+  # ===== Authentik Worker ===== #
+  authentik-worker:
+    image: ghcr.io/goauthentik/server:2024.12.3
+    container_name: authentik-worker
+    command: worker
+    environment:
+      - AUTHENTIK_REDIS__HOST=authentik-redis
+      - AUTHENTIK_POSTGRESQL__HOST=authentik-postgres
+      - AUTHENTIK_POSTGRESQL__USER=${POSTGRES_USER}
+      - AUTHENTIK_POSTGRESQL__NAME=${POSTGRES_DB}
+      - AUTHENTIK_POSTGRESQL__PASSWORD=${POSTGRES_PASSWORD}
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY}
+      - AUTHENTIK_ERROR_REPORTING__ENABLED=false
+      - AUTHENTIK_LOG_LEVEL=info
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/docker/volumes/authentik/media:/media
+      - ~/docker/volumes/authentik/certs:/certs
+      - ~/docker/volumes/authentik/custom-templates:/templates
+    depends_on:
+      authentik-postgres:
+        condition: service_healthy
+      authentik-redis:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

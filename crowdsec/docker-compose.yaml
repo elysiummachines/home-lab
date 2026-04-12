@@ -1,0 +1,61 @@
+---
+services:
+  crowdsec:
+    image: crowdsecurity/crowdsec:latest
+    container_name: crowdsec
+    volumes:
+      - ~/docker/volumes/crowdsec/data:/var/lib/crowdsec/data
+      - ~/docker/volumes/crowdsec/config:/etc/crowdsec
+      - /var/log/traefik:/var/log/traefik:ro
+      - /var/log/auth.log:/var/log/auth.log:ro
+    environment:
+      - TZ=America/Calgary
+      - COLLECTIONS=crowdsecurity/traefik crowdsecurity/http-cve
+      - GID=1000
+    healthcheck:
+      test:
+        - CMD
+        - cscli
+        - version
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    networks:
+      - proxy
+  crowdsec-bouncer:
+    image: fbonalair/traefik-crowdsec-bouncer:latest
+    container_name: crowdsec-bouncer
+    environment:
+      - TZ=America/Calgary
+      - CROWDSEC_BOUNCER_API_KEY=${CROWDSEC_BOUNCER_API_KEY}
+      - CROWDSEC_AGENT_HOST=crowdsec:8080
+    restart: unless-stopped
+    depends_on:
+      - crowdsec
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 64M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    networks:
+      - proxy
+networks:
+  proxy:
+    external: true
